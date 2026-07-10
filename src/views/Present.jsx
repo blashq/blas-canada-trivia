@@ -41,6 +41,7 @@ function Stage({ game, teams, answers }) {
   if (phase === 'final_reveal' || phase === 'done') return <FinalReveal game={game} teams={teams} answers={answers} />
   if (phase === 'round_recap') return <Recap game={game} round={round} answers={answers} teams={teams} />
   if (phase === 'standings') return <Standings teams={teams} />
+  if (phase === 'breakdown') return <Breakdown teams={teams} answers={answers} />
 
   // standard question / reveal
   return <QuestionStage game={game} round={round} teams={teams} answers={answers} />
@@ -293,6 +294,62 @@ function Standings({ teams }) {
         })}
       </div>
       <p className="sub" style={{ marginTop: 12 }}>Points stay secret until the Final Wager. Winner gets an extra vacation day, last place is on lunch duty!</p>
+    </div>
+  )
+}
+
+function Breakdown({ teams, answers }) {
+  const roundIdxs = [...ROUNDS.map((_, i) => i), FINALE_ROUND_INDEX]
+  const perTeam = teams.map(t => {
+    const rp = {}
+    for (const a of answers.filter(a => a.team_id === t.id)) rp[a.round_index] = (rp[a.round_index] || 0) + Number(a.points || 0)
+    return { team: t, rp }
+  })
+  const cum = {}
+  perTeam.forEach(pt => { cum[pt.team.id] = {}; let run = 0; roundIdxs.forEach(r => { run += (pt.rp[r] || 0); cum[pt.team.id][r] = run }) })
+  const rankByRound = {}
+  roundIdxs.forEach(r => {
+    const sorted = [...perTeam].sort((a, b) => cum[b.team.id][r] - cum[a.team.id][r])
+    rankByRound[r] = {}
+    sorted.forEach((pt, i) => { rankByRound[r][pt.team.id] = i + 1 })
+  })
+  const order = [...perTeam].sort((a, b) => Number(b.team.score) - Number(a.team.score))
+  const col = (v) => v > 0 ? '#128A6B' : v < 0 ? 'var(--flag-red)' : '#9aa0a6'
+  const Cell = ({ pts, rank }) => (
+    <td style={{ padding: '6px 8px', textAlign: 'center', borderLeft: '1px solid #eee' }}>
+      <div style={{ fontWeight: 800, fontSize: 20, color: col(pts) }}>{pts > 0 ? '+' : ''}{pts}</div>
+      <div style={{ fontSize: 11, opacity: 0.55, fontWeight: 700 }}>#{rank}</div>
+    </td>
+  )
+  return (
+    <div className="stack center" style={{ maxWidth: 1180, width: '100%' }}>
+      <span className="pill" style={{ fontSize: 18, background: '#eafaf3', color: 'var(--brand-teal-dark)', fontWeight: 800 }}><MapleLeaf size={20} /> The Full Story</span>
+      <h1 className="huge" style={{ fontSize: 'clamp(34px, 7vh, 72px)', margin: '2px 0 4px' }}>Round by round</h1>
+      <p className="sub" style={{ marginTop: 0 }}>Big number = points that round. Small number = your place after that round.</p>
+      <div className="card" style={{ width: '100%', overflowX: 'auto' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ fontSize: 15, color: '#555' }}>
+              <th style={{ textAlign: 'left', padding: '6px 8px' }}>Team</th>
+              {ROUNDS.map((r, i) => <th key={i} style={{ padding: '6px 8px' }}>{i + 1}</th>)}
+              <th style={{ padding: '6px 8px' }}>Final</th>
+              <th style={{ padding: '6px 8px', textAlign: 'right' }}>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {order.map((row, ri) => (
+              <tr key={row.team.id} style={{ background: ri === 0 ? '#fff0f1' : ri % 2 ? '#fafafa' : 'transparent', borderTop: '1px solid #eee' }}>
+                <td style={{ padding: '6px 8px', fontWeight: 800, whiteSpace: 'nowrap' }}>
+                  <span className="standrank" style={{ marginRight: 4 }}>{ri === 0 ? '🏆' : ri + 1}</span>
+                  <span className="dot" style={{ background: row.team.color, marginRight: 6 }} />{emoji[row.team.avatar]} {row.team.name}
+                </td>
+                {roundIdxs.map(r => <Cell key={r} pts={row.rp[r] || 0} rank={rankByRound[r][row.team.id]} />)}
+                <td style={{ padding: '6px 8px', textAlign: 'right', fontWeight: 900, fontSize: 24, borderLeft: '2px solid #ddd' }}>{Number(row.team.score)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

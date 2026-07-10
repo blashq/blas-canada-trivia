@@ -259,8 +259,9 @@ function WagerBet({ game, team, answers }) {
       <p className="sub">Place your bet now. You will not see the question until it is locked. It is a total gamble.</p>
       {locked ? <p className="big" style={{ color: 'var(--flag-red)' }}>Wager locked ✓</p> : (
         <>
-          <div className="huge" style={{ fontSize: 56 }}>{Math.round(frac * 100)}%</div>
-          <input type="range" min="0" max="100" value={Math.round(frac * 100)} onChange={e => setFrac(e.target.value / 100)} style={{ width: '100%' }} />
+          <div className="huge" style={{ fontSize: 56 }}>{Math.round(frac * 50)}<span style={{ fontSize: 24 }}> pts</span></div>
+          <p className="sub" style={{ marginTop: -6 }}>out of a 50 point pool</p>
+          <input type="range" min="0" max="50" value={Math.round(frac * 50)} onChange={e => setFrac(e.target.value / 50)} style={{ width: '100%' }} />
           <button className="btn big" onClick={lockIn}>Lock in my wager</button>
         </>
       )}

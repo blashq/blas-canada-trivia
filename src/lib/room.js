@@ -10,6 +10,7 @@ export function genCode(n = 4) {
 }
 
 export const FINALE_ROUND_INDEX = ROUNDS.length
+export const WAGER_CAP = 50
 export function roundAt(i) { return i >= ROUNDS.length ? FINALE : ROUNDS[i] }
 export function isFinale(i) { return i >= ROUNDS.length }
 export function totalRounds() { return ROUNDS.length + 1 }
@@ -104,6 +105,13 @@ export async function endTimer(id) {
 export async function showStandings(game) {
   await patchGame(game.id, { phase: 'standings', data: { ...(game.data || {}), prev_phase: game.phase } })
 }
+export async function showBreakdown(game) {
+  await patchGame(game.id, { phase: 'breakdown', data: { ...(game.data || {}), prev_phase: game.phase } })
+}
+export async function hideBreakdown(game) {
+  const prev = (game.data && game.data.prev_phase) || 'final_reveal'
+  await patchGame(game.id, { phase: prev })
+}
 export async function hideStandings(game) {
   const prev = (game.data && game.data.prev_phase) || 'intro'
   await patchGame(game.id, { phase: prev })
@@ -122,7 +130,7 @@ async function applyScoringForQuestion(game, roundIndex, questionIndex) {
     const ans = (answers || []).find(a => a.team_id === team.id) || null
     let pts
     if (round.type === 'wager') {
-      const stake = ans && ans.value ? Math.round(Number(team.score) * (ans.value.fraction ?? 0)) : 0
+      const stake = ans && ans.value ? Math.round(WAGER_CAP * (ans.value.fraction ?? 0)) : 0
       pts = ans && ans.value && ans.value.choice === round.correct ? stake : -stake
     } else {
       pts = scoreAnswer(round, q, ans)
