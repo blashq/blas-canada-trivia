@@ -111,11 +111,12 @@ function Msg({ emoji, title, sub }) {
 }
 
 function QuestionInput({ game, team, answers, round, rIndex, q }) {
-  const question = round.questions[q]
-  const subtype = round.type === 'mixed' ? question.subtype : round.type
+  const question = round.questions ? round.questions[q] : null
+  const subtype = question ? (round.type === 'mixed' ? question.subtype : round.type) : round.type
   const { remaining } = useCountdown(game.question_started_at, round.timerSec, game.accepting)
   const myAns = findAnswer(answers, team.id, rIndex, q)
   const timedOut = remaining <= 0 || !game.accepting
+  if (!question) return <Msg emoji="🍁" title="Stand by…" />
 
   // reveal state (host revealed): show a light "your result"
   if (game.revealed) {

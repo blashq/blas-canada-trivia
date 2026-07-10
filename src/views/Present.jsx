@@ -97,12 +97,13 @@ function QuestionStage({ game, round, teams, answers }) {
     const t = setTimeout(() => advanceRapid(game), msLeft + 300)
     return () => clearTimeout(t)
   }, [round.type, game.phase, game.accepting, game.question_started_at, game.current_round, q])
-  const question = round.questions[q]
-  const subtype = round.type === 'mixed' ? question.subtype : round.type
-  const seed = `${game.id}:${game.current_round}:${q}:${question.id}`
+  const question = round.questions ? round.questions[q] : null
+  const subtype = question ? (round.type === 'mixed' ? question.subtype : round.type) : round.type
+  const seed = `${game.id}:${game.current_round}:${q}:${question ? question.id : 'x'}`
   const { remaining, frac, elapsed } = useCountdown(game.question_started_at, round.timerSec, game.accepting)
   const revealed = game.revealed
   const tally = game.data?.tally
+  if (!question) return null
 
   return (
     <div className="stack center present-compact" style={{ maxWidth: 1100, width: '100%', gap: 8 }}>
@@ -214,7 +215,8 @@ function RevealFooter({ blurb, tally }) {
 
 function Recap({ game, round, answers, teams }) {
   const q = game.current_question
-  const question = round.questions[q]
+  const question = round.questions ? round.questions[q] : null
+  if (!question) return null
   const total = teams.length
   // recompute tally for this rapid question from answers
   let right = 0
@@ -223,7 +225,7 @@ function Recap({ game, round, answers, teams }) {
   }
   return (
     <div className="stack center" style={{ maxWidth: 1000 }}>
-      <span className="pill">Recap · {q + 1} / {round.questions.length}</span>
+      <span className="pill">Recap · {q + 1} / {(round.questions?.length ?? 0)}</span>
       <h1 className="big">{question.statement}</h1>
       <div className="huge" style={{ fontSize: 60, color: question.correct ? 'var(--good)' : 'var(--bad)' }}>
         {question.correct ? '✅ TRUE' : '❌ FALSE'}

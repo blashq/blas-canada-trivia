@@ -41,7 +41,7 @@ function Panel({ game, teams, answers }) {
     if (!game.test_mode) return
     const bots = teams.filter(t => t.is_bot)
     if (!bots.length) return
-    if (game.phase === 'question' && game.accepting) {
+    if (game.phase === 'question' && game.accepting && round.questions && round.questions[game.current_question]) {
       const rIdx = game.current_round, qIdx = game.current_question
       const question = round.questions[qIdx]
       const subtype = round.type === 'mixed' ? question.subtype : round.type
@@ -151,7 +151,7 @@ function Controls({ game, teams, round, finale, answeredCount }) {
   if (game.phase === 'round_recap') {
     return (
       <>
-        <b>Rapid recap · item {game.current_question + 1}/{round.questions.length}</b>
+        <b>Rapid recap · item {game.current_question + 1}/{(round.questions?.length ?? 0)}</b>
         <button className="btn big" onClick={() => recapNext(game)}>Next answer →</button>
       </>
     )
@@ -181,10 +181,10 @@ function Controls({ game, teams, round, finale, answeredCount }) {
 
   // standard question phase
   if (round.type === 'tf-rapid') {
-    const lastRapid = game.current_question + 1 >= round.questions.length
+    const lastRapid = game.current_question + 1 >= (round.questions?.length ?? 0)
     return (
       <>
-        <b>Rapid fire · Q{game.current_question + 1}/{round.questions.length}</b>
+        <b>Rapid fire · Q{game.current_question + 1}/{(round.questions?.length ?? 0)}</b>
         <p className="sub">{answeredCount}/{total} answered · advances on its own, or use the button</p>
         <button className="btn big" onClick={() => advanceRapid(game)}>{lastRapid ? 'Finish round →' : 'Next statement →'}</button>
       </>
@@ -192,7 +192,7 @@ function Controls({ game, teams, round, finale, answeredCount }) {
   }
   return (
     <>
-      <b>{round.title} · Q{game.current_question + 1}/{round.questions.length}</b>
+      <b>{round.title} · Q{game.current_question + 1}/{(round.questions?.length ?? 0)}</b>
       <p className="sub">{answeredCount}/{total} answered</p>
       <div className="row wrap">
         {!game.revealed && <button className="btn ghost" onClick={() => endTimer(game.id)}>End timer</button>}
