@@ -367,7 +367,7 @@ function FinalReveal({ game, teams, answers }) {
   return (
     <div className="stack center" style={{ maxWidth: 1100, width: '100%', position: 'relative' }}>
       <LeafFall n={18} />
-      <div style={{ fontSize: 60 }}>🏆🍁</div>
+      <div style={{ fontSize: 60 }}>🏖️🍁</div>
       <h1 className="huge">Champions: {winner?.team.name}</h1>
       <div className="card" style={{ width: '100%', overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 18 }}>
