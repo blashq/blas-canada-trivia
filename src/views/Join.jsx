@@ -133,7 +133,7 @@ function QuestionInput({ game, team, answers, round, rIndex, q }) {
     <div className="stack" style={{ maxWidth: 520, width: '100%' }}>
       <div className="row spread"><span className="pill">{round.title}</span><span className={'pill mono'}>⏱ {remaining}s</span></div>
       {subtype === 'mc' && <MCInput {...common} />}
-      {subtype === 'tf' && <TFInput {...common} />}
+      {(subtype === 'tf' || subtype === 'tf-rapid') && <TFInput {...common} />}
       {subtype === 'select-all' && <SelectAllInput {...common} />}
       {subtype === 'clue-drip' && <DripInput {...common} clueCount={question.clues.length} intervalSec={round.clueIntervalSec} />}
       {subtype === 'bank-drip' && <DripInput {...common} clueCount={question.clues.length} intervalSec={round.scoring.drip.intervalSec} />}

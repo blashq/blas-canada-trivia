@@ -104,7 +104,7 @@ function QuestionStage({ game, round, teams, answers }) {
       </div>
 
       {subtype === 'mc' && <MCStage question={question} revealed={revealed} seed={seed} />}
-      {subtype === 'tf' && <TFStage question={question} revealed={revealed} />}
+      {(subtype === 'tf' || subtype === 'tf-rapid') && <TFStage question={question} revealed={revealed} />}
       {subtype === 'select-all' && <SpotStage question={question} revealed={revealed} />}
       {(subtype === 'clue-drip' || subtype === 'bank-drip') &&
         <DripStage question={question} revealed={revealed} seed={seed}
