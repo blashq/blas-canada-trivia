@@ -194,10 +194,13 @@ function SelectAllInput({ game, team, question, rIndex, q, timedOut, myAns }) {
     <>
       <h2 className="big">{question.prompt || 'Who here is Canadian?'}</h2>
       <p className="sub">Select everyone Canadian, at least one.</p>
-      <div className="photos">
+      <div className="facegrid-sm">
         {question.options.map(o => (
-          <div key={o.id} className={'photo' + (shown.includes(o.id) ? ' sel' : '')} onClick={() => toggle(o.id)}>
-            {o.img ? <img src={o.img} alt="" /> : <div className="center grow" style={{ fontSize: 40 }}>👤</div>}
+          <div key={o.id} className="facecard" onClick={() => toggle(o.id)}>
+            <div className={'photo' + (shown.includes(o.id) ? ' sel' : '')}>
+              {o.img ? <img src={o.img} alt="" /> : <div className="center grow" style={{ fontSize: 40 }}>👤</div>}
+            </div>
+            <div className="facename-sm">{o.label}</div>
           </div>
         ))}
       </div>

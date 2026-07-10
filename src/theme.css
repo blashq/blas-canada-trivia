@@ -132,3 +132,13 @@ body::after { content: ''; position: fixed; inset: 0; z-index: -1; pointer-event
   padding: 10px 48px; background: rgba(255,255,255,.55); box-shadow: 0 10px 28px rgba(216,6,33,.13); }
 .opt { box-shadow: 0 3px 10px rgba(0,0,0,.05); }
 .opt.correct { box-shadow: 0 6px 18px rgba(18,138,107,.22); }
+
+
+/* ---- Spot the Canadian: face lineup + names under photos ---- */
+.facegrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; max-width: 1180px; width: 100%; }
+.facegrid-sm { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; }
+.facecard { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+.facecard .photo { width: 100%; aspect-ratio: 1; }
+.facename { margin-top: 8px; font-weight: 800; font-size: clamp(14px, 1.9vh, 22px); text-align: center; line-height: 1.15; color: var(--ink); }
+.facename-sm { margin-top: 6px; font-weight: 700; font-size: 14px; text-align: center; line-height: 1.15; }
+@media (max-width: 900px) { .facegrid { grid-template-columns: 1fr 1fr; max-width: 520px; } }

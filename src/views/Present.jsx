@@ -154,12 +154,14 @@ function TFStage({ question, revealed }) {
 function SpotStage({ question, revealed }) {
   return (
     <>
-      <h1 className="big" style={{ margin: '6px 0' }}>{revealed ? 'The Canadians are…' : 'Who here is Canadian?'}</h1>
-      <div className="photos" style={{ maxWidth: 720, width: '100%' }}>
+      <h1 className="big" style={{ margin: '4px 0 2px', fontSize: 'clamp(24px, 4.4vh, 48px)' }}>{revealed ? 'The Canadians are highlighted' : 'Who here is Canadian?'}</h1>
+      <div className="facegrid">
         {question.options.map(o => (
-          <div key={o.id} className={'photo' + (revealed ? (o.isCanadian ? ' rev-yes' : ' rev-no') : '')}>
-            {o.img ? <img src={o.img} alt="" /> : <div className="center grow" style={{ fontSize: 60 }}>👤</div>}
-            {revealed && o.label && o.label !== 'TBD' && <div className="name">{o.label}{o.isCanadian ? ' 🍁' : ''}</div>}
+          <div key={o.id} className="facecard">
+            <div className={'photo' + (revealed ? (o.isCanadian ? ' rev-yes' : ' rev-no') : '')}>
+              {o.img ? <img src={o.img} alt="" /> : <div className="center grow" style={{ fontSize: 60 }}>👤</div>}
+            </div>
+            <div className="facename">{o.label}{revealed && o.isCanadian ? ' 🍁' : ''}</div>
           </div>
         ))}
       </div>
