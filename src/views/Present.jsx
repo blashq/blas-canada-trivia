@@ -69,16 +69,25 @@ function Lobby({ game, teams }) {
 
 function Intro({ round, idx }) {
   return (
-    <div className="stack center" style={{ maxWidth: 1000 }}>
-      <img src="/art/mountie.png" alt="" style={{ position: 'fixed', left: '3vw', bottom: '2vh', height: '34vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
-      <img src="/art/friends.png" alt="" style={{ position: 'fixed', right: '3vw', bottom: '2vh', height: '30vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
-      <MapleLeaf size={60} />
-      <p className="sub">Round {idx + 1}</p>
-      <h1 className="huge">{round.title}</h1>
-      <div className="card" style={{ maxWidth: 760 }}>
-        <p style={{ fontSize: 24, margin: 0 }}>{round.rules}</p>
+    <div className="stack center" style={{ maxWidth: 1040 }}>
+      <img src="/art/mountie.png" alt="" style={{ position: 'fixed', left: '3vw', bottom: '2vh', height: '32vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
+      <img src="/art/friends.png" alt="" style={{ position: 'fixed', right: '3vw', bottom: '2vh', height: '28vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
+      <div className="pill" style={{ fontSize: 20, padding: '8px 18px', background: '#eafaf3', color: 'var(--brand-teal-dark)', fontWeight: 800 }}>
+        <MapleLeaf size={22} /> Round {idx + 1} of {ROUNDS.length}
       </div>
-      <div className="pill" style={{ fontSize: 22, padding: '12px 20px', background: '#fff0f1', color: 'var(--flag-red-dark)' }}>{round.pointsLabel}</div>
+      <h1 className="huge" style={{ margin: '2px 0', fontSize: 'clamp(40px, 8vh, 96px)' }}>{round.title}</h1>
+      <div className="card" style={{ maxWidth: 880, borderTop: '7px solid var(--flag-red)' }}>
+        <div className="sub" style={{ fontSize: 15, fontWeight: 800, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--brand-teal-dark)', marginBottom: 8 }}>How this round works</div>
+        <p style={{ fontSize: 'clamp(20px, 3vh, 27px)', margin: 0, lineHeight: 1.4 }}>{round.rules}</p>
+      </div>
+      <div className="row wrap" style={{ gap: 14, justifyContent: 'center' }}>
+        <span className="pill" style={{ fontSize: 'clamp(18px,2.6vh,24px)', padding: '12px 22px', background: '#fff0f1', color: 'var(--flag-red-dark)', fontWeight: 800 }}>
+          ⏱ {round.timerSec}s {round.type === 'tf-rapid' ? 'per statement' : 'per question'}
+        </span>
+        <span className="pill" style={{ fontSize: 'clamp(18px,2.6vh,24px)', padding: '12px 22px', background: '#eafaf3', color: 'var(--brand-teal-dark)', fontWeight: 800 }}>
+          🏆 {round.pointsLabel}
+        </span>
+      </div>
     </div>
   )
 }
