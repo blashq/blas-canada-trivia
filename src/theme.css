@@ -150,3 +150,10 @@ body::after { content: ''; position: fixed; inset: 0; z-index: -1; pointer-event
 .standrow.lead { background: #fff0f1; box-shadow: 0 10px 28px rgba(216,6,33,.15); }
 .standrank { min-width: 56px; text-align: center; font-size: clamp(24px, 3.6vh, 42px); font-weight: 900; color: var(--flag-red-dark); }
 .standname { font-size: clamp(20px, 3vh, 36px); }
+
+
+/* standings prize / punishment tags */
+.standrow.last { background: #fff0f1; box-shadow: 0 10px 28px rgba(216,6,33,.12); }
+.standtag { margin-left: auto; font-size: clamp(15px, 2.2vh, 24px); font-weight: 900; padding: 7px 18px; border-radius: 99px; }
+.standtag.prize { background: #eafaf3; color: var(--brand-teal-dark); }
+.standtag.punish { background: #ffe0e3; color: var(--flag-red-dark); }

@@ -261,23 +261,28 @@ function FinaleQ({ game }) {
 
 function Standings({ teams }) {
   const rows = [...teams].sort((a, b) => Number(b.score) - Number(a.score))
-  const medal = ['🥇', '🥈', '🥉']
   return (
-    <div className="stack center" style={{ width: '100%', maxWidth: 900 }}>
+    <div className="stack center" style={{ width: '100%', maxWidth: 940 }}>
       <span className="pill" style={{ fontSize: 18, background: '#eafaf3', color: 'var(--brand-teal-dark)', fontWeight: 800 }}><MapleLeaf size={20} /> Standings</span>
       <h1 className="huge" style={{ fontSize: 'clamp(38px, 8vh, 84px)', margin: '2px 0 8px' }}>Where things stand</h1>
       <div className="stack" style={{ width: '100%', gap: 12 }}>
         {rows.length === 0 && <p className="sub">No teams yet.</p>}
-        {rows.map((t, i) => (
-          <div key={t.id} className={'standrow' + (i === 0 ? ' lead' : '')}>
-            <span className="standrank">{medal[i] || (i + 1)}</span>
-            <span className="dot" style={{ background: t.color, width: 20, height: 20 }} />
-            <span style={{ fontSize: '1.15em' }}>{emoji[t.avatar]}</span>
-            <span className="standname">{t.name}</span>
-          </div>
-        ))}
+        {rows.map((t, i) => {
+          const isTop = i === 0
+          const isBottom = i === rows.length - 1 && rows.length > 1
+          return (
+            <div key={t.id} className={'standrow' + (isTop ? ' lead' : '') + (isBottom ? ' last' : '')}>
+              <span className="standrank">{isTop ? '🏆' : isBottom ? '💀' : (i + 1)}</span>
+              <span className="dot" style={{ background: t.color, width: 20, height: 20 }} />
+              <span style={{ fontSize: '1.15em' }}>{emoji[t.avatar]}</span>
+              <span className="standname">{t.name}</span>
+              {isTop && <span className="standtag prize">🎁 Prize</span>}
+              {isBottom && <span className="standtag punish">😈 Punishment</span>}
+            </div>
+          )
+        })}
       </div>
-      <p className="sub" style={{ marginTop: 12 }}>Points stay secret until the Final Wager.</p>
+      <p className="sub" style={{ marginTop: 12 }}>Points stay secret until the Final Wager. Top gets a prize, last gets a punishment!</p>
     </div>
   )
 }
