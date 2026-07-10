@@ -117,7 +117,7 @@ function QuestionStage({ game, round, teams, answers }) {
       {subtype === 'select-all' && <SpotStage question={question} revealed={revealed} seed={seed} />}
       {(subtype === 'clue-drip' || subtype === 'bank-drip') &&
         <DripStage question={question} revealed={revealed} seed={seed}
-          intervalSec={subtype === 'clue-drip' ? round.clueIntervalSec : round.scoring.drip.intervalSec}
+          intervalSec={round.timerSec / (question.clues?.length || 1)}
           elapsed={elapsed} />}
 
       {revealed && <RevealFooter blurb={question.reveal?.blurb} tally={tally} />}
@@ -244,9 +244,9 @@ function FinalBet({ game, teams, answers }) {
   return (
     <div className="stack center">
       <div style={{ fontSize: 70 }}>🎲</div>
-      <p className="sub">Final Wager</p>
-      <h1 className="huge">{FINALE.category}</h1>
-      <p style={{ fontSize: 26, maxWidth: 700 }}>Teams are placing their secret bets…</p>
+      <p className="sub">The Final Wager</p>
+      <h1 className="huge">Mystery Question</h1>
+      <p style={{ fontSize: 24, maxWidth: 780, lineHeight: 1.35 }}>Bet any portion of your points now, before you see anything. The question stays hidden until every wager is locked. Answer right and you gain your bet, answer wrong and you lose it. Pure gamble.</p>
       <div className="big" style={{ color: 'var(--brand-teal-dark)' }}>{locked} of {total} wagers locked</div>
     </div>
   )
@@ -286,13 +286,13 @@ function Standings({ teams }) {
               <span className="dot" style={{ background: t.color, width: 20, height: 20 }} />
               <span style={{ fontSize: '1.15em' }}>{emoji[t.avatar]}</span>
               <span className="standname">{t.name}</span>
-              {isTop && <span className="standtag prize">🎁 Prize</span>}
-              {isBottom && <span className="standtag punish">😈 Punishment</span>}
+              {isTop && <span className="standtag prize">🏖️ Extra Vacation Day</span>}
+              {isBottom && <span className="standtag punish">🍽️ Lunch Duty</span>}
             </div>
           )
         })}
       </div>
-      <p className="sub" style={{ marginTop: 12 }}>Points stay secret until the Final Wager. Top gets a prize, last gets a punishment!</p>
+      <p className="sub" style={{ marginTop: 12 }}>Points stay secret until the Final Wager. Winner gets an extra vacation day, last place is on lunch duty!</p>
     </div>
   )
 }

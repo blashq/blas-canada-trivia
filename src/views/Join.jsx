@@ -10,14 +10,14 @@ const emoji = { moose: '🫎', beaver: '🦫', bear: '🐻', loon: '🦆', mount
 
 export default function Join() {
   const [team, setTeam] = useState(() => { try { return JSON.parse(localStorage.getItem(LS)) } catch { return null } })
-  const { game, answers } = useGame(team?.gameId)
+  const { game, teams, answers } = useGame(team?.gameId)
 
   function leave() { localStorage.removeItem(LS); setTeam(null) }
 
   if (!team) return <JoinForm onJoined={(t) => { localStorage.setItem(LS, JSON.stringify(t)); setTeam(t) }} />
   if (!game) return <Splash><p className="sub">Connecting…</p></Splash>
 
-  return <Play game={game} team={team} answers={answers} onLeave={leave} />
+  return <Play game={game} team={team} answers={answers} teams={teams} onLeave={leave} />
 }
 
 function Splash({ children }) {
@@ -63,7 +63,8 @@ function JoinForm({ onJoined }) {
   )
 }
 
-function Play({ game, team, answers, onLeave }) {
+function Play({ game, team, answers, teams, onLeave }) {
+  const myScore = teams?.find(t => t.id === team.id)?.score ?? 0
   const finale = game.current_round >= ROUNDS.length
   const round = roundAt(game.current_round)
   const r = game.current_round
@@ -75,7 +76,10 @@ function Play({ game, team, answers, onLeave }) {
       <div className="flag-bar" />
       <div className="row spread pad" style={{ paddingBottom: 0 }}>
         <AvatarChip avatar={team.avatar} color={team.color} name={team.name} />
-        <button className="btn ghost sm" onClick={onLeave}>Leave</button>
+        <div className="row" style={{ gap: 8 }}>
+          <span className="pill" style={{ fontWeight: 800, background: '#eafaf3', color: 'var(--brand-teal-dark)' }}>Score: {myScore}</span>
+          <button className="btn ghost sm" onClick={onLeave}>Leave</button>
+        </div>
       </div>
       <div className="grow pad center stack" style={{ justifyContent: 'flex-start' }}>
         <PlayBody game={game} team={team} answers={answers} round={round} rIndex={rIndex} q={q} finale={finale} />
@@ -137,8 +141,8 @@ function QuestionInput({ game, team, answers, round, rIndex, q }) {
       {subtype === 'mc' && <MCInput {...common} />}
       {(subtype === 'tf' || subtype === 'tf-rapid') && <TFInput {...common} />}
       {subtype === 'select-all' && <SelectAllInput {...common} />}
-      {subtype === 'clue-drip' && <DripInput {...common} clueCount={question.clues.length} intervalSec={round.clueIntervalSec} />}
-      {subtype === 'bank-drip' && <DripInput {...common} clueCount={question.clues.length} intervalSec={round.scoring.drip.intervalSec} />}
+      {subtype === 'clue-drip' && <DripInput {...common} clueCount={question.clues.length} intervalSec={round.timerSec / question.clues.length} />}
+      {subtype === 'bank-drip' && <DripInput {...common} clueCount={question.clues.length} intervalSec={round.timerSec / question.clues.length} />}
       {timedOut && <p className="sub center">Time's up, locked.</p>}
     </div>
   )
@@ -251,8 +255,8 @@ function WagerBet({ game, team, answers }) {
   return (
     <div className="card stack center" style={{ maxWidth: 480 }}>
       <div style={{ fontSize: 48 }}>🎲</div>
-      <h2 className="big">{FINALE.category}</h2>
-      <p className="sub">Bet a portion of your points, before you see the question.</p>
+      <h2 className="big">Mystery Question</h2>
+      <p className="sub">Place your bet now. You will not see the question until it is locked. It is a total gamble.</p>
       {locked ? <p className="big" style={{ color: 'var(--flag-red)' }}>Wager locked ✓</p> : (
         <>
           <div className="huge" style={{ fontSize: 56 }}>{Math.round(frac * 100)}%</div>
