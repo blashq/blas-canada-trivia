@@ -49,8 +49,6 @@ function Lobby({ game, teams }) {
   const url = window.location.origin + window.location.pathname
   return (
     <div className="stack center">
-      <img src="/art/beaver.png" alt="" style={{ position: 'fixed', left: '2vw', bottom: '2vh', height: '32vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
-      <img src="/art/celebrate.png" alt="" style={{ position: 'fixed', right: '2vw', bottom: '2vh', height: '32vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
       <p className="sub">Join on your laptop at</p>
       <h2 className="big" style={{ color: 'var(--brand-teal-dark)' }}>{url}</h2>
       <p className="sub" style={{ marginTop: 20 }}>Room code</p>
@@ -70,8 +68,6 @@ function Lobby({ game, teams }) {
 function Intro({ round, idx }) {
   return (
     <div className="stack center" style={{ maxWidth: 1040 }}>
-      <img src="/art/mountie.png" alt="" style={{ position: 'fixed', left: '3vw', bottom: '2vh', height: '32vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
-      <img src="/art/friends.png" alt="" style={{ position: 'fixed', right: '3vw', bottom: '2vh', height: '28vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
       <div className="pill" style={{ fontSize: 20, padding: '8px 18px', background: '#eafaf3', color: 'var(--brand-teal-dark)', fontWeight: 800 }}>
         <MapleLeaf size={22} /> Round {idx + 1} of {ROUNDS.length}
       </div>

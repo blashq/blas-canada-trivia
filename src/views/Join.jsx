@@ -24,8 +24,6 @@ function Splash({ children }) {
   return (
     <div className="screen center pad">
       <div className="flag-bar" style={{ position: 'fixed', top: 0, left: 0, right: 0 }} />
-      <img src="/art/beaver.png" alt="" className="join-art" style={{ left: '2vw' }} />
-      <img src="/art/celebrate.png" alt="" className="join-art" style={{ right: '2vw' }} />
       <MapleLeaf size={54} />
       <h1 className="big" style={{ margin: '12px 0' }}>BLAS Canada Day Trivia</h1>
       {children}
