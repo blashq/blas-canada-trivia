@@ -130,7 +130,7 @@ function Controls({ game, teams, round, finale, answeredCount }) {
   if (game.phase === 'lobby') {
     return (
       <>
-        <b>Lobby — {teams.filter(t => !t.is_bot).length} team(s) joined</b>
+        <b>Lobby · {teams.filter(t => !t.is_bot).length} team(s) joined</b>
         <p className="sub">Start when everyone's in (2–4 teams).</p>
         <button className="btn big" disabled={total < 1} onClick={() => startGame(game.id)}>Start game →</button>
       </>
@@ -147,7 +147,7 @@ function Controls({ game, teams, round, finale, answeredCount }) {
   if (game.phase === 'round_recap') {
     return (
       <>
-        <b>Rapid recap — item {game.current_question + 1}/{round.questions.length}</b>
+        <b>Rapid recap · item {game.current_question + 1}/{round.questions.length}</b>
         <button className="btn big" onClick={() => recapNext(game)}>Next answer →</button>
       </>
     )
@@ -155,7 +155,7 @@ function Controls({ game, teams, round, finale, answeredCount }) {
   if (game.phase === 'final_bet') {
     return (
       <>
-        <b>Final Wager — teams betting</b>
+        <b>Final Wager · teams betting</b>
         <p className="sub">{answeredCountFinale(game, teams)} / {total} wagers locked</p>
         <button className="btn big" onClick={() => finaleShowQuestion(game)}>Reveal the question →</button>
       </>
@@ -171,7 +171,7 @@ function Controls({ game, teams, round, finale, answeredCount }) {
     )
   }
   if (game.phase === 'final_reveal' || game.phase === 'done') {
-    return <><b>🏆 Game over — results on the big screen.</b>
+    return <><b>🏆 Game over · results on the big screen.</b>
       <button className="btn ghost" onClick={() => { if (confirm('Reset for a new game?')) resetGame(game.id) }}>Reset / New game</button></>
   }
 
@@ -179,7 +179,7 @@ function Controls({ game, teams, round, finale, answeredCount }) {
   if (round.type === 'tf-rapid') {
     return (
       <>
-        <b>Rapid fire — Q{game.current_question + 1}/{round.questions.length} (auto-advancing)</b>
+        <b>Rapid fire · Q{game.current_question + 1}/{round.questions.length} (auto-advancing)</b>
         <p className="sub">{answeredCount}/{total} answered</p>
         {game.test_mode && <button className="btn ghost sm" onClick={() => advanceRapid(game)}>Skip to next →</button>}
       </>
@@ -187,7 +187,7 @@ function Controls({ game, teams, round, finale, answeredCount }) {
   }
   return (
     <>
-      <b>{round.title} — Q{game.current_question + 1}/{round.questions.length}</b>
+      <b>{round.title} · Q{game.current_question + 1}/{round.questions.length}</b>
       <p className="sub">{answeredCount}/{total} answered</p>
       <div className="row wrap">
         {!game.revealed && <button className="btn ghost" onClick={() => endTimer(game.id)}>End timer</button>}

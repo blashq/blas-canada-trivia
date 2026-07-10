@@ -87,7 +87,7 @@ function Play({ game, team, answers, onLeave }) {
 function PlayBody({ game, team, answers, round, rIndex, q, finale }) {
   const phase = game.phase
   if (phase === 'lobby') return <Msg emoji="⏳" title="You're in!" sub="Waiting for the host to start the game…" />
-  if (phase === 'intro') return <Msg emoji="📣" title={round.title} sub="Get ready — round starting shortly." />
+  if (phase === 'intro') return <Msg emoji="📣" title={round.title} sub="Get ready, round starting shortly." />
   if (phase === 'round_recap') return <Msg emoji="📺" title="Eyes on the big screen!" sub="Going through the answers…" />
   if (phase === 'final_reveal' || phase === 'done') return <Msg emoji="🍁" title="Watch the big screen!" sub="Final results are in." />
 
@@ -137,7 +137,7 @@ function QuestionInput({ game, team, answers, round, rIndex, q }) {
       {subtype === 'select-all' && <SelectAllInput {...common} />}
       {subtype === 'clue-drip' && <DripInput {...common} clueCount={question.clues.length} intervalSec={round.clueIntervalSec} />}
       {subtype === 'bank-drip' && <DripInput {...common} clueCount={question.clues.length} intervalSec={round.scoring.drip.intervalSec} />}
-      {timedOut && <p className="sub center">Time's up — locked.</p>}
+      {timedOut && <p className="sub center">Time's up, locked.</p>}
     </div>
   )
 }
@@ -193,7 +193,7 @@ function SelectAllInput({ game, team, question, rIndex, q, timedOut, myAns }) {
   return (
     <>
       <h2 className="big">{question.prompt || 'Who here is Canadian?'}</h2>
-      <p className="sub">Select everyone Canadian — at least one.</p>
+      <p className="sub">Select everyone Canadian, at least one.</p>
       <div className="photos">
         {question.options.map(o => (
           <div key={o.id} className={'photo' + (shown.includes(o.id) ? ' sel' : '')} onClick={() => toggle(o.id)}>
@@ -231,7 +231,7 @@ function DripInput({ game, team, question, rIndex, q, timedOut, myAns, intervalS
           <button key={o.id} className={'opt' + (myAns?.value === o.id ? ' sel' : '') + (locked ? ' locked' : '')} onClick={() => pick(o.id)}>{o.label}</button>
         ))}
       </div>
-      {myAns ? <p className="sub center">Locked in ✓ — no changing now!</p>
+      {myAns ? <p className="sub center">Locked in ✓, no changing now!</p>
         : !timedOut && <p className="sub center">Lock in now for more points. This is final!</p>}
     </>
   )
@@ -246,7 +246,7 @@ function WagerBet({ game, team, answers }) {
     <div className="card stack center" style={{ maxWidth: 480 }}>
       <div style={{ fontSize: 48 }}>🎲</div>
       <h2 className="big">{FINALE.category}</h2>
-      <p className="sub">Bet a portion of your points — before you see the question.</p>
+      <p className="sub">Bet a portion of your points, before you see the question.</p>
       {locked ? <p className="big" style={{ color: 'var(--flag-red)' }}>Wager locked ✓</p> : (
         <>
           <div className="huge" style={{ fontSize: 56 }}>{Math.round(frac * 100)}%</div>
