@@ -48,13 +48,13 @@ function Stage({ game, teams, answers }) {
 function Lobby({ game, teams }) {
   const url = window.location.origin + window.location.pathname
   return (
-    <div className="stack center">
-      <p className="sub">Join on your laptop at</p>
-      <h2 className="big" style={{ color: 'var(--brand-teal-dark)' }}>{url}</h2>
-      <p className="sub" style={{ marginTop: 20 }}>Room code</p>
-      <div className="codebox">{game.room_code}</div>
-      <div className="row wrap center" style={{ marginTop: 24, justifyContent: 'center' }}>
-        {teams.length === 0 && <p className="sub">No teams yet…</p>}
+    <div className="stack center" style={{ gap: 14 }}>
+      <p className="eyebrow">Join on your laptop at</p>
+      <h2 className="big" style={{ color: 'var(--brand-teal-dark)', fontSize: 'clamp(26px, 4.6vh, 56px)' }}>{url}</h2>
+      <p className="eyebrow" style={{ marginTop: 14 }}>Room code</p>
+      <div className="codechip"><span className="codebox" style={{ fontSize: 'clamp(40px, 8vw, 92px)' }}>{game.room_code}</span></div>
+      <div className="row wrap center" style={{ marginTop: 22, justifyContent: 'center' }}>
+        {teams.length === 0 && <p className="sub">Waiting for teams to join…</p>}
         {teams.filter(t => !t.is_bot).map(t => (
           <span key={t.id} className="pill" style={{ fontSize: 20, padding: '10px 16px' }}>
             <span className="dot" style={{ background: t.color }} /> {emoji[t.avatar]} {t.name}
