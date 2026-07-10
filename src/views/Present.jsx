@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useGame } from '../lib/useGame.js'
 import { ROUNDS, FINALE } from '../lib/gameData.js'
-import { loadLatestGame, roundAt, FINALE_ROUND_INDEX } from '../lib/room.js'
+import { loadLatestGame, roundAt, FINALE_ROUND_INDEX, advanceRapid } from '../lib/room.js'
 import { useCountdown, Timer, Brand, MapleLeaf, LeafFall, AvatarChip } from '../components/ui.jsx'
 import { shuffledOptions } from '../lib/shuffle.js'
 
@@ -90,6 +90,13 @@ function Intro({ round, idx }) {
 
 function QuestionStage({ game, round, teams, answers }) {
   const q = game.current_question
+  // Big screen drives the rapid-fire auto-advance (host tab may be backgrounded/throttled).
+  useEffect(() => {
+    if (round.type !== 'tf-rapid' || game.phase !== 'question' || !game.accepting || !game.question_started_at) return
+    const msLeft = Math.max(0, round.timerSec * 1000 - (Date.now() - new Date(game.question_started_at).getTime()))
+    const t = setTimeout(() => advanceRapid(game), msLeft + 300)
+    return () => clearTimeout(t)
+  }, [round.type, game.phase, game.accepting, game.question_started_at, game.current_round, q])
   const question = round.questions[q]
   const subtype = round.type === 'mixed' ? question.subtype : round.type
   const seed = `${game.id}:${game.current_round}:${q}:${question.id}`

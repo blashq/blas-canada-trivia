@@ -170,6 +170,9 @@ export async function jumpToRound(game, roundIndex) {
 // ---------- rapid-fire ----------
 export async function startRapidRound(game) { await startQuestion(game.id, 0) }
 export async function advanceRapid(game) {
+  // Guard: re-read live state so multiple drivers (big screen + host) can never double-advance.
+  const { data: g } = await supabase.from('games').select('phase, current_round, current_question').eq('id', game.id).single()
+  if (!g || g.phase !== 'question' || g.current_round !== game.current_round || g.current_question !== game.current_question) return
   const round = roundAt(game.current_round)
   if (game.current_question + 1 < round.questions.length) {
     await startQuestion(game.id, game.current_question + 1)
