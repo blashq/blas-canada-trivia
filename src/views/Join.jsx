@@ -24,8 +24,9 @@ function Splash({ children }) {
   return (
     <div className="screen center pad">
       <div className="flag-bar" style={{ position: 'fixed', top: 0, left: 0, right: 0 }} />
-      <MapleLeaf size={54} />
-      <h1 className="big" style={{ margin: '12px 0' }}>BLAS Canada Day Trivia</h1>
+      <img src="/blas-logo.png" alt="BLAS" style={{ height: 60, width: 'auto', marginTop: 8 }} />
+      <h1 className="big" style={{ margin: '8px 0 4px', fontSize: 'clamp(26px, 7vw, 42px)' }}>Canada Day Trivia</h1>
+      <span className="pill leaf" style={{ fontWeight: 800, color: 'var(--flag-red-dark)', background: '#fff0f1', padding: '8px 16px', marginBottom: 6 }}>🍁 Happy Belated Canada Day</span>
       {children}
     </div>
   )
@@ -49,10 +50,10 @@ function JoinForm({ onJoined }) {
   return (
     <Splash>
       <div className="card stack" style={{ maxWidth: 460, width: '100%', textAlign: 'left' }}>
-        <label className="sub">Room code</label>
+        <label className="eyebrow">Room code</label>
         <input className="field" style={{ textTransform: 'uppercase', letterSpacing: '.15em', fontWeight: 800 }}
           value={code} onChange={e => setCode(e.target.value)} placeholder="ABCD" maxLength={5} />
-        <label className="sub">Team name</label>
+        <label className="eyebrow">Team name</label>
         <input className="field" value={name} onChange={e => setName(e.target.value)} placeholder="The Maple Mavericks" maxLength={24} />
         <p className="sub" style={{ margin: '2px 0 0', fontSize: 15 }}>We'll assign your team a colour &amp; a Canadian mascot so everyone stands out. 🍁</p>
         {err && <div style={{ color: 'var(--bad)', fontWeight: 700 }}>{err}</div>}
