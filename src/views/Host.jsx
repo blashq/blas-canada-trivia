@@ -181,11 +181,12 @@ function Controls({ game, teams, round, finale, answeredCount }) {
 
   // standard question phase
   if (round.type === 'tf-rapid') {
+    const lastRapid = game.current_question + 1 >= round.questions.length
     return (
       <>
-        <b>Rapid fire · Q{game.current_question + 1}/{round.questions.length} (auto-advancing)</b>
-        <p className="sub">{answeredCount}/{total} answered</p>
-        {game.test_mode && <button className="btn ghost sm" onClick={() => advanceRapid(game)}>Skip to next →</button>}
+        <b>Rapid fire · Q{game.current_question + 1}/{round.questions.length}</b>
+        <p className="sub">{answeredCount}/{total} answered · advances on its own, or use the button</p>
+        <button className="btn big" onClick={() => advanceRapid(game)}>{lastRapid ? 'Finish round →' : 'Next statement →'}</button>
       </>
     )
   }
