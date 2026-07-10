@@ -4,7 +4,7 @@ import { ROUNDS, FINALE } from '../lib/gameData.js'
 import {
   hostGetOrCreateGame, patchGame, resetGame, removeTeam, addBots,
   startGame, beginRound, endTimer, revealQuestion, nextQuestion, goToNextRound,
-  jumpToRound, advanceRapid, recapNext, finaleShowQuestion, finaleReveal,
+  jumpToRound, advanceRapid, recapNext, finaleShowQuestion, finaleReveal, showStandings, hideStandings,
   roundAt, FINALE_ROUND_INDEX, isFinale, submitAnswer, findAnswer,
 } from '../lib/room.js'
 import { useCountdown, Brand, MapleLeaf } from '../components/ui.jsx'
@@ -86,7 +86,11 @@ function Panel({ game, teams, answers }) {
 
         {/* ---- controls ---- */}
         <div className="card stack">
-          <Controls game={game} teams={teams} round={round} finale={finale} answeredCount={answeredCount} />
+          {game.phase === 'standings'
+            ? <><b>📊 Standings are on the big screen</b><button className="btn big" onClick={() => hideStandings(game)}>← Back to the game</button></>
+            : <Controls game={game} teams={teams} round={round} finale={finale} answeredCount={answeredCount} />}
+          {!['lobby', 'standings', 'final_reveal', 'done'].includes(game.phase) &&
+            <button className="btn ghost sm" style={{ marginTop: 4 }} onClick={() => showStandings(game)}>📊 Show standings on big screen</button>}
         </div>
 
         {/* ---- test tools ---- */}

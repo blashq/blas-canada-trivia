@@ -101,6 +101,14 @@ export async function endTimer(id) {
   await patchGame(id, { accepting: false })
 }
 
+export async function showStandings(game) {
+  await patchGame(game.id, { phase: 'standings', data: { ...(game.data || {}), prev_phase: game.phase } })
+}
+export async function hideStandings(game) {
+  const prev = (game.data && game.data.prev_phase) || 'intro'
+  await patchGame(game.id, { phase: prev })
+}
+
 // Apply scoring for a single (round,question) across all teams. Idempotent-ish:
 // caller should only invoke once (on reveal).
 async function applyScoringForQuestion(game, roundIndex, questionIndex) {

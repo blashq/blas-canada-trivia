@@ -142,3 +142,11 @@ body::after { content: ''; position: fixed; inset: 0; z-index: -1; pointer-event
 .facename { margin-top: 8px; font-weight: 800; font-size: clamp(14px, 1.9vh, 22px); text-align: center; line-height: 1.15; color: var(--ink); }
 .facename-sm { margin-top: 6px; font-weight: 700; font-size: 14px; text-align: center; line-height: 1.15; }
 @media (max-width: 900px) { .facegrid { grid-template-columns: 1fr 1fr; max-width: 520px; } }
+
+
+/* ---- host-triggered standings (rank only, points hidden) ---- */
+.standrow { display: flex; align-items: center; gap: 18px; width: 100%; background: #fff;
+  border-radius: 18px; padding: 14px 26px; box-shadow: var(--shadow); font-weight: 800; }
+.standrow.lead { background: #fff0f1; box-shadow: 0 10px 28px rgba(216,6,33,.15); }
+.standrank { min-width: 56px; text-align: center; font-size: clamp(24px, 3.6vh, 42px); font-weight: 900; color: var(--flag-red-dark); }
+.standname { font-size: clamp(20px, 3vh, 36px); }

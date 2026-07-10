@@ -89,6 +89,7 @@ function PlayBody({ game, team, answers, round, rIndex, q, finale }) {
   if (phase === 'lobby') return <Msg emoji="⏳" title="You're in!" sub="Waiting for the host to start the game…" />
   if (phase === 'intro') return <Msg emoji="📣" title={round.title} sub="Get ready, round starting shortly." />
   if (phase === 'round_recap') return <Msg emoji="📺" title="Eyes on the big screen!" sub="Going through the answers…" />
+  if (phase === 'standings') return <Msg emoji="📊" title="Check the big screen!" sub="Here are the current standings." />
   if (phase === 'final_reveal' || phase === 'done') return <Msg emoji="🍁" title="Watch the big screen!" sub="Final results are in." />
 
   if (phase === 'final_bet') return <WagerBet game={game} team={team} answers={answers} />
