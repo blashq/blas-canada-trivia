@@ -48,10 +48,9 @@ export function LeafFall({ n = 14 }) {
 
 export function Brand() {
   return (
-    <div className="brandbar" style={{ gap: 12 }}>
-      <MapleLeaf size={42} />
-      <span className="blas" style={{ fontSize: 26 }}>BLAS</span>
-      <span style={{ fontSize: 20, fontWeight: 800, color: 'var(--flag-red)' }}>Canada Day Trivia</span>
+    <div className="brandbar" style={{ gap: 14 }}>
+      <img src="/blas-logo.png" alt="BLAS" style={{ height: 44, width: 'auto', display: 'block' }} />
+      <span style={{ fontSize: 20, fontWeight: 800, color: 'var(--flag-red)', letterSpacing: '.01em' }}>Canada Day Trivia</span>
     </div>
   )
 }
