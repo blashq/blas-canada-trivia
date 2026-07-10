@@ -3,6 +3,7 @@ import { useGame } from '../lib/useGame.js'
 import { ROUNDS, FINALE, TEAM_COLORS, AVATARS } from '../lib/gameData.js'
 import { joinGameByCode, submitAnswer, findAnswer, roundAt, FINALE_ROUND_INDEX } from '../lib/room.js'
 import { useCountdown, Timer, Brand, AvatarChip, MapleLeaf } from '../components/ui.jsx'
+import { shuffledOptions } from '../lib/shuffle.js'
 
 const LS = 'blas_team_v1'
 const emoji = { leaf: '🍁', moose: '🫎', beaver: '🦫', bear: '🐻', goose: '🪿', loon: '🦆' }
@@ -170,12 +171,13 @@ function isMyAnswerCorrect(round, question, myAns) {
 
 function MCInput({ game, team, question, rIndex, q, timedOut, myAns }) {
   const sel = myAns?.value
+  const opts = React.useMemo(() => shuffledOptions(question.options, `${game.id}:${rIndex}:${q}:${question.id}`), [game.id, rIndex, q, question.id])
   function pick(id) { if (!timedOut) submitAnswer(game.id, team.id, rIndex, q, id) }
   return (
     <>
       <h2 className="big">{question.prompt}</h2>
       <div className="options">
-        {question.options.map(o => (
+        {opts.map(o => (
           <button key={o.id} className={'opt' + (sel === o.id ? ' sel' : '') + (timedOut ? ' locked' : '')} onClick={() => pick(o.id)}>{o.label}</button>
         ))}
       </div>
@@ -223,6 +225,7 @@ function SelectAllInput({ game, team, question, rIndex, q, timedOut, myAns }) {
 
 function DripInput({ game, team, question, rIndex, q, timedOut, myAns, intervalSec, clueCount }) {
   const { elapsed } = useCountdown(game.question_started_at, 999, game.accepting)
+  const opts = React.useMemo(() => shuffledOptions(question.options, `${game.id}:${rIndex}:${q}:${question.id}`), [game.id, rIndex, q, question.id])
   const clueIdx = Math.min(Math.floor(elapsed / intervalSec), clueCount - 1)
   const locked = !!myAns || timedOut
   function pick(id) {
@@ -240,7 +243,7 @@ function DripInput({ game, team, question, rIndex, q, timedOut, myAns, intervalS
         ))}
       </div>
       <div className="options" style={{ gridTemplateColumns: '1fr 1fr' }}>
-        {question.options.map(o => (
+        {opts.map(o => (
           <button key={o.id} className={'opt' + (myAns?.value === o.id ? ' sel' : '') + (locked ? ' locked' : '')} onClick={() => pick(o.id)}>{o.label}</button>
         ))}
       </div>
@@ -273,6 +276,7 @@ function WagerBet({ game, team, answers }) {
 
 function FinaleQuestion({ game, team, answers }) {
   const myAns = findAnswer(answers, team.id, FINALE_ROUND_INDEX, 0)
+  const opts = React.useMemo(() => shuffledOptions(FINALE.options, `${game.id}:finale`), [game.id])
   const { remaining } = useCountdown(game.question_started_at, FINALE.timerSec, game.accepting)
   const timedOut = remaining <= 0 || !game.accepting
   function pick(id) {
@@ -286,7 +290,7 @@ function FinaleQuestion({ game, team, answers }) {
       <div className="row spread"><span className="pill">Final Wager</span><span className="pill mono">⏱ {remaining}s</span></div>
       <h2 className="big">{FINALE.prompt}</h2>
       <div className="options">
-        {FINALE.options.map(o => (
+        {opts.map(o => (
           <button key={o.id} className={'opt' + (choice === o.id ? ' sel' : '') + (timedOut ? ' locked' : '')} onClick={() => pick(o.id)}>{o.label}</button>
         ))}
       </div>

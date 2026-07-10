@@ -3,6 +3,7 @@ import { useGame } from '../lib/useGame.js'
 import { ROUNDS, FINALE } from '../lib/gameData.js'
 import { loadLatestGame, roundAt, FINALE_ROUND_INDEX } from '../lib/room.js'
 import { useCountdown, Timer, Brand, MapleLeaf, LeafFall, AvatarChip } from '../components/ui.jsx'
+import { shuffledOptions } from '../lib/shuffle.js'
 
 const emoji = { leaf: '🍁', moose: '🫎', beaver: '🦫', bear: '🐻', goose: '🪿', loon: '🦆' }
 
@@ -23,7 +24,7 @@ function Shell({ children }) {
     <div className="screen">
       <div className="flag-bar" />
       <div className="row spread pad"><Brand /><span className="pill leaf">🍁 Happy Canada Day</span></div>
-      <div className="grow center pad" style={{ position: 'relative', overflow: 'hidden' }}>{children}</div>
+      <div className="grow center pad" style={{ position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}>{children}</div>
     </div>
   )
 }
@@ -82,6 +83,7 @@ function QuestionStage({ game, round, teams, answers }) {
   const q = game.current_question
   const question = round.questions[q]
   const subtype = round.type === 'mixed' ? question.subtype : round.type
+  const seed = `${game.id}:${game.current_round}:${q}:${question.id}`
   const { remaining, frac, elapsed } = useCountdown(game.question_started_at, round.timerSec, game.accepting)
   const revealed = game.revealed
   const tally = game.data?.tally
@@ -93,11 +95,11 @@ function QuestionStage({ game, round, teams, answers }) {
         {!revealed && <div style={{ width: 220 }}><Timer remaining={remaining} frac={frac} /></div>}
       </div>
 
-      {subtype === 'mc' && <MCStage question={question} revealed={revealed} />}
+      {subtype === 'mc' && <MCStage question={question} revealed={revealed} seed={seed} />}
       {subtype === 'tf' && <TFStage question={question} revealed={revealed} />}
       {subtype === 'select-all' && <SpotStage question={question} revealed={revealed} />}
       {(subtype === 'clue-drip' || subtype === 'bank-drip') &&
-        <DripStage question={question} revealed={revealed}
+        <DripStage question={question} revealed={revealed} seed={seed}
           intervalSec={subtype === 'clue-drip' ? round.clueIntervalSec : round.scoring.drip.intervalSec}
           elapsed={elapsed} />}
 
@@ -106,13 +108,15 @@ function QuestionStage({ game, round, teams, answers }) {
   )
 }
 
-function MCStage({ question, revealed }) {
+function MCStage({ question, revealed, seed }) {
+  const opts = React.useMemo(() => shuffledOptions(question.options, seed), [seed])
+  const showFlagMap = revealed && question.image && question.reveal?.flag
   return (
     <>
-      {question.image && <div className="card" style={{ padding: 8 }}><img src={question.image} alt="" style={{ maxHeight: 300 }} /></div>}
+      {question.image && <div className="card" style={{ padding: 8 }}><img src={showFlagMap ? question.reveal.flag : question.image} alt="" style={{ maxHeight: 320 }} /></div>}
       <h1 className="big" style={{ margin: '10px 0 6px' }}>{question.prompt}</h1>
       <div className="options" style={{ maxWidth: 900, width: '100%' }}>
-        {question.options.map(o => (
+        {opts.map(o => (
           <div key={o.id} className={'opt' + (revealed && o.id === question.correct ? ' correct' : '')}>
             {o.label}{revealed && o.id === question.correct ? ' ✓' : ''}
           </div>
@@ -120,7 +124,7 @@ function MCStage({ question, revealed }) {
       </div>
       {revealed && question.reveal?.answerName && (
         <div className="pill" style={{ fontSize: 22, padding: '10px 18px' }}>
-          {question.reveal.flag ? <img src={question.reveal.flag} alt="" style={{ height: 24 }} /> : '🍁'} {question.reveal.answerName}
+          {(!question.image && question.reveal.flag) ? <img src={question.reveal.flag} alt="" style={{ height: 24 }} /> : <MapleLeaf size={22} />} {question.reveal.answerName}
         </div>
       )}
     </>
@@ -155,7 +159,8 @@ function SpotStage({ question, revealed }) {
   )
 }
 
-function DripStage({ question, revealed, intervalSec, elapsed }) {
+function DripStage({ question, revealed, intervalSec, elapsed, seed }) {
+  const opts = React.useMemo(() => shuffledOptions(question.options, seed), [seed])
   const shown = revealed ? question.clues.length : Math.min(Math.floor(elapsed / intervalSec) + 1, question.clues.length)
   return (
     <>
@@ -167,7 +172,7 @@ function DripStage({ question, revealed, intervalSec, elapsed }) {
         ))}
       </div>
       <div className="options" style={{ maxWidth: 900, marginTop: 10, gridTemplateColumns: question.options.length > 4 ? '1fr 1fr 1fr' : '1fr 1fr' }}>
-        {question.options.map(o => (
+        {opts.map(o => (
           <div key={o.id} className={'opt' + (revealed && o.id === question.correct ? ' correct' : '')}>{o.label}{revealed && o.id === question.correct ? ' ✓' : ''}</div>
         ))}
       </div>
@@ -228,6 +233,7 @@ function FinalBet({ game, teams, answers }) {
 
 function FinaleQ({ game }) {
   const { remaining, frac } = useCountdown(game.question_started_at, FINALE.timerSec, game.accepting)
+  const opts = React.useMemo(() => shuffledOptions(FINALE.options, `${game.id}:finale`), [game.id])
   return (
     <div className="stack center" style={{ maxWidth: 1000 }}>
       <div className="row spread" style={{ width: '100%' }}>
@@ -236,7 +242,7 @@ function FinaleQ({ game }) {
       </div>
       <h1 className="big">{FINALE.prompt}</h1>
       <div className="options" style={{ maxWidth: 900 }}>
-        {FINALE.options.map(o => <div key={o.id} className="opt">{o.label}</div>)}
+        {opts.map(o => <div key={o.id} className="opt">{o.label}</div>)}
       </div>
     </div>
   )

@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 export function MapleLeaf({ size = 28, color = 'var(--flag-red)', style }) {
   return (
-    <svg viewBox="0 0 512 512" width={size} height={size} style={style} aria-hidden>
-      <path fill={color} d="M256 12l-30 118-92-64 30 118-118-30 88 82-40 40 118 22-10 82 66-52 66 52-10-82 118-22-40-40 88-82-118 30 30-118-92 64z" transform="scale(1,1)"/>
-      <path fill={color} d="M246 300h20v200h-20z"/>
+    <svg viewBox="0 0 500 500" width={size} height={size} style={style} aria-hidden>
+      <path fill={color} d="M250 460 C 240 380, 190 350, 150 360 C 125 367, 100 345, 110 320 C 130 270, 90 250, 60 270 C 40 283, 20 260, 40 230 C 70 190, 75 145, 120 130 C 150 120, 165 90, 190 100 C 210 107, 220 80, 250 100 C 280 80, 290 107, 310 100 C 335 90, 350 120, 380 130 C 425 145, 430 190, 460 230 C 480 260, 460 283, 440 270 C 410 250, 370 270, 390 320 C 400 345, 375 367, 350 360 C 310 350, 260 380, 250 460 Z"/>
     </svg>
   )
 }
