@@ -191,12 +191,13 @@ function SelectAllInput({ game, team, question, rIndex, q, timedOut, myAns }) {
   function toggle(id) { if (locked) return; setSel(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]) }
   function lockIn() { if (locked || sel.length === 0) return; submitAnswer(game.id, team.id, rIndex, q, sel) }
   const shown = myAns ? (Array.isArray(myAns.value) ? myAns.value : []) : sel
+  const opts = React.useMemo(() => shuffledOptions(question.options, `${game.id}:${rIndex}:${q}:${question.id}`), [game.id, rIndex, q, question.id])
   return (
     <>
       <h2 className="big">{question.prompt || 'Who here is Canadian?'}</h2>
       <p className="sub">Select everyone Canadian, at least one.</p>
       <div className="facegrid-sm">
-        {question.options.map(o => (
+        {opts.map(o => (
           <div key={o.id} className="facecard" onClick={() => toggle(o.id)}>
             <div className={'photo' + (shown.includes(o.id) ? ' sel' : '')}>
               {o.img ? <img src={o.img} alt="" /> : <div className="center grow" style={{ fontSize: 40 }}>👤</div>}

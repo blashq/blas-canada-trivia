@@ -106,7 +106,7 @@ function QuestionStage({ game, round, teams, answers }) {
 
       {subtype === 'mc' && <MCStage question={question} revealed={revealed} seed={seed} />}
       {(subtype === 'tf' || subtype === 'tf-rapid') && <TFStage question={question} revealed={revealed} />}
-      {subtype === 'select-all' && <SpotStage question={question} revealed={revealed} />}
+      {subtype === 'select-all' && <SpotStage question={question} revealed={revealed} seed={seed} />}
       {(subtype === 'clue-drip' || subtype === 'bank-drip') &&
         <DripStage question={question} revealed={revealed} seed={seed}
           intervalSec={subtype === 'clue-drip' ? round.clueIntervalSec : round.scoring.drip.intervalSec}
@@ -152,12 +152,13 @@ function TFStage({ question, revealed }) {
   )
 }
 
-function SpotStage({ question, revealed }) {
+function SpotStage({ question, revealed, seed }) {
+  const opts = React.useMemo(() => shuffledOptions(question.options, seed), [seed])
   return (
     <>
       <h1 className="big" style={{ margin: '4px 0 2px', fontSize: 'clamp(24px, 4.4vh, 48px)' }}>{revealed ? 'The Canadians are highlighted' : 'Who here is Canadian?'}</h1>
       <div className="facegrid">
-        {question.options.map(o => (
+        {opts.map(o => (
           <div key={o.id} className="facecard">
             <div className={'photo' + (revealed ? (o.isCanadian ? ' rev-yes' : ' rev-no') : '')}>
               {o.img ? <img src={o.img} alt="" /> : <div className="center grow" style={{ fontSize: 60 }}>👤</div>}
