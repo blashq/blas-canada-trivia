@@ -283,7 +283,7 @@ function Standings({ teams }) {
           const isBottom = i === rows.length - 1 && rows.length > 1
           return (
             <div key={t.id} className={'standrow' + (isTop ? ' lead' : '') + (isBottom ? ' last' : '')}>
-              <span className="standrank">{isTop ? '🏆' : isBottom ? '💀' : (i + 1)}</span>
+              <span className="standrank">{isTop ? '🏖️' : isBottom ? '🍽️' : (i + 1)}</span>
               <span className="dot" style={{ background: t.color, width: 20, height: 20 }} />
               <span style={{ fontSize: '1.15em' }}>{emoji[t.avatar]}</span>
               <span className="standname">{t.name}</span>
@@ -340,7 +340,7 @@ function Breakdown({ teams, answers }) {
             {order.map((row, ri) => (
               <tr key={row.team.id} style={{ background: ri === 0 ? '#fff0f1' : ri % 2 ? '#fafafa' : 'transparent', borderTop: '1px solid #eee' }}>
                 <td style={{ padding: '6px 8px', fontWeight: 800, whiteSpace: 'nowrap' }}>
-                  <span className="standrank" style={{ marginRight: 4 }}>{ri === 0 ? '🏆' : ri + 1}</span>
+                  <span className="standrank" style={{ marginRight: 4 }}>{ri === 0 ? '🏖️' : ri === order.length - 1 ? '🍽️' : ri + 1}</span>
                   <span className="dot" style={{ background: row.team.color, marginRight: 6 }} />{emoji[row.team.avatar]} {row.team.name}
                 </td>
                 {roundIdxs.map(r => <Cell key={r} pts={row.rp[r] || 0} rank={rankByRound[r][row.team.id]} />)}
