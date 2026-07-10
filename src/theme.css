@@ -81,7 +81,7 @@ h1,h2,h3 { margin: 0; line-height: 1.1; }
 .photo.rev-no img { filter: blur(10px) grayscale(.6); opacity:.5; }
 
 /* ---- timer ---- */
-.timer { font-size: clamp(30px,7vw,80px); font-weight: 900; }
+.timer { font-size: clamp(26px,4.6vh,52px); font-weight: 900; }
 .timer.low { color: var(--flag-red); }
 .timerbar { height: 12px; background:#eee; border-radius: 99px; overflow:hidden; }
 .timerbar > div { height:100%; background: var(--brand-teal-dark); transition: width .95s linear; }

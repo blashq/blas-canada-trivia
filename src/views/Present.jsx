@@ -98,7 +98,7 @@ function QuestionStage({ game, round, teams, answers }) {
 
   return (
     <div className="stack center present-compact" style={{ maxWidth: 1100, width: '100%', gap: 8 }}>
-      <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 76 }}>
         <span className="pill" style={{ fontSize: 18 }}>{round.title}{round.type !== 'wager' ? ` · Q${q + 1}` : ''}</span>
         {!revealed && <div style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', width: 200 }}><Timer remaining={remaining} frac={frac} /></div>}
       </div>
@@ -122,7 +122,7 @@ function MCStage({ question, revealed, seed }) {
   return (
     <>
       {question.image && <img src={showFlagMap ? question.reveal.flag : question.image} alt="" style={{ maxHeight: '32vh', filter: 'drop-shadow(0 8px 16px rgba(0,0,0,.20))', margin: '2px 0' }} />}
-      <h1 className="big" style={{ margin: '4px 0', fontSize: 'clamp(24px, 4.6vh, 52px)' }}>{question.prompt}</h1>
+      <h1 className="big" style={{ margin: '4px auto', fontSize: 'clamp(24px, 4.6vh, 52px)', maxWidth: 1000 }}>{question.prompt}</h1>
       <div className="options" style={{ maxWidth: 900, width: '100%' }}>
         {opts.map(o => (
           <div key={o.id} className={'opt' + (revealed && o.id === question.correct ? ' correct' : '')}>
