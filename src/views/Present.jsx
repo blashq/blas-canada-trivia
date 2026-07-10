@@ -3,7 +3,7 @@ import { useGame } from '../lib/useGame.js'
 import { ROUNDS, FINALE } from '../lib/gameData.js'
 import { loadLatestGame, roundAt, FINALE_ROUND_INDEX, advanceRapid } from '../lib/room.js'
 import { useCountdown, Timer, Brand, MapleLeaf, LeafFall, AvatarChip } from '../components/ui.jsx'
-import { shuffledOptions } from '../lib/shuffle.js'
+import { shuffledOptions, spreadShuffle } from '../lib/shuffle.js'
 
 const emoji = { moose: '🫎', beaver: '🦫', bear: '🐻', loon: '🦆', mountie: '👮', cntower: '🗼' }
 
@@ -162,7 +162,7 @@ function TFStage({ question, revealed }) {
 }
 
 function SpotStage({ question, revealed, seed }) {
-  const opts = React.useMemo(() => shuffledOptions(question.options, seed), [seed])
+  const opts = React.useMemo(() => spreadShuffle(question.options, seed), [seed])
   return (
     <>
       <h1 className="big" style={{ margin: '4px 0 2px', fontSize: 'clamp(24px, 4.4vh, 48px)' }}>{revealed ? 'The Canadians are highlighted' : 'Who here is Canadian?'}</h1>
