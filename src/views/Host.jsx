@@ -211,12 +211,12 @@ function answeredCountFinale(game, teams) {
 // ---- bot helpers ----
 function rand(arr) { return arr[Math.floor(Math.random() * arr.length)] }
 function botValue(subtype, question) {
-  if (subtype === 'tf') return Math.random() > 0.5
+  if (subtype === 'tf' || subtype === 'tf-rapid') return Math.random() > 0.5
   if (subtype === 'select-all') {
-    const picks = question.options.filter(() => Math.random() > 0.5).map(o => o.id)
-    return picks.length ? picks : [rand(question.options).id]
+    const picks = (question.options || []).filter(() => Math.random() > 0.5).map(o => o.id)
+    return picks.length ? picks : (question.options ? [rand(question.options).id] : [])
   }
-  return rand(question.options).id // mc, clue-drip, bank-drip
+  return question.options ? rand(question.options).id : null // mc, clue-drip, bank-drip
 }
 function botClue(subtype, question) {
   if (subtype === 'clue-drip') return Math.floor(Math.random() * (question.clues?.length || 1))
