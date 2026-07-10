@@ -21,10 +21,10 @@ export default function Present() {
 
 function Shell({ children }) {
   return (
-    <div className="screen">
+    <div className="screen" style={{ height: '100vh', overflow: 'hidden' }}>
       <div className="flag-bar" />
       <div className="row spread pad"><Brand /><span className="pill leaf">🍁 Happy Canada Day</span></div>
-      <div className="grow center pad" style={{ position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start' }}>{children}</div>
+      <div className="grow center pad" style={{ position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>{children}</div>
     </div>
   )
 }
@@ -89,7 +89,7 @@ function QuestionStage({ game, round, teams, answers }) {
   const tally = game.data?.tally
 
   return (
-    <div className="stack center" style={{ maxWidth: 1100, width: '100%' }}>
+    <div className="stack center present-compact" style={{ maxWidth: 1100, width: '100%', gap: 8 }}>
       <div className="row spread" style={{ width: '100%' }}>
         <span className="pill" style={{ fontSize: 18 }}>{round.title}{round.type !== 'wager' ? ` · Q${q + 1}` : ''}</span>
         {!revealed && <div style={{ width: 220 }}><Timer remaining={remaining} frac={frac} /></div>}
@@ -113,8 +113,8 @@ function MCStage({ question, revealed, seed }) {
   const showFlagMap = revealed && question.image && question.reveal?.flag
   return (
     <>
-      {question.image && <div className="card" style={{ padding: 8 }}><img src={showFlagMap ? question.reveal.flag : question.image} alt="" style={{ maxHeight: 320 }} /></div>}
-      <h1 className="big" style={{ margin: '10px 0 6px' }}>{question.prompt}</h1>
+      {question.image && <img src={showFlagMap ? question.reveal.flag : question.image} alt="" style={{ maxHeight: '32vh', filter: 'drop-shadow(0 8px 16px rgba(0,0,0,.20))', margin: '2px 0' }} />}
+      <h1 className="big" style={{ margin: '4px 0', fontSize: 'clamp(24px, 4.6vh, 52px)' }}>{question.prompt}</h1>
       <div className="options" style={{ maxWidth: 900, width: '100%' }}>
         {opts.map(o => (
           <div key={o.id} className={'opt' + (revealed && o.id === question.correct ? ' correct' : '')}>
@@ -123,8 +123,8 @@ function MCStage({ question, revealed, seed }) {
         ))}
       </div>
       {revealed && question.reveal?.answerName && (
-        <div className="pill" style={{ fontSize: 22, padding: '10px 18px' }}>
-          {(!question.image && question.reveal.flag) ? <img src={question.reveal.flag} alt="" style={{ height: 24 }} /> : <MapleLeaf size={22} />} {question.reveal.answerName}
+        <div className="pill" style={{ fontSize: 20, padding: '8px 16px' }}>
+          {(!question.image && question.reveal.flag) ? <img src={question.reveal.flag} alt="" style={{ height: 22 }} /> : <MapleLeaf size={20} />} {question.reveal.answerName}
         </div>
       )}
     </>
@@ -182,13 +182,13 @@ function DripStage({ question, revealed, intervalSec, elapsed, seed }) {
 
 function RevealFooter({ blurb, tally }) {
   return (
-    <div className="stack center" style={{ marginTop: 14 }}>
+    <div className="stack center" style={{ marginTop: 4, gap: 6 }}>
       {tally && (
-        <div className="big" style={{ color: 'var(--brand-teal-dark)' }}>
+        <div style={{ color: 'var(--brand-teal-dark)', fontWeight: 800, fontSize: 'clamp(18px, 3.2vh, 34px)' }}>
           {tally.right === 0 ? 'Nobody got it! 😳' : `${tally.right} of ${tally.total} teams got it right`}
         </div>
       )}
-      {blurb && <p className="sub" style={{ fontSize: 20, maxWidth: 800 }}>{blurb}</p>}
+      {blurb && <p className="sub" style={{ fontSize: 'clamp(14px, 2vh, 18px)', maxWidth: 820, margin: 0 }}>{blurb}</p>}
     </div>
   )
 }
