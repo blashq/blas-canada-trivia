@@ -1,0 +1,106 @@
+:root {
+  --flag-red: #D80621;
+  --flag-red-dark: #A8041A;
+  --brand-teal: #7FB2B0;      /* BLAS accent — replace with exact hex from logo */
+  --brand-teal-dark: #4F8A88;
+  --ink: #1a1a1a;
+  --paper: #ffffff;
+  --cream: #fff7f4;
+  --muted: #8a8a8a;
+  --good: #128A6B;
+  --bad: #C2410C;
+  --shadow: 0 10px 30px rgba(0,0,0,.12);
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- layout ---- */
+.screen { min-height: 100%; display: flex; flex-direction: column; }
+.center { align-items: center; justify-content: center; text-align: center; }
+.pad { padding: 24px; }
+.stack { display: flex; flex-direction: column; gap: 16px; }
+.row { display: flex; gap: 12px; align-items: center; }
+.wrap { flex-wrap: wrap; }
+.grow { flex: 1; }
+.spread { justify-content: space-between; }
+
+/* ---- Canada Day flourish ---- */
+.flag-bar { height: 8px; background: linear-gradient(90deg, var(--flag-red) 0 25%, #fff 25% 75%, var(--flag-red) 75% 100%); }
+.leaf { color: var(--flag-red); }
+.brandbar { display:flex; align-items:center; gap:10px; }
+.brandbar .blas { font-weight: 800; letter-spacing: .18em; color: var(--brand-teal-dark); }
+
+/* ---- typography ---- */
+h1,h2,h3 { margin: 0; line-height: 1.1; }
+.big { font-size: clamp(28px, 6vw, 72px); font-weight: 800; }
+.huge { font-size: clamp(40px, 9vw, 120px); font-weight: 900; }
+.sub { color: var(--muted); font-size: 18px; }
+.mono { font-variant-numeric: tabular-nums; }
+
+/* ---- cards & buttons ---- */
+.card { background: var(--paper); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; }
+.btn {
+  border: none; border-radius: 14px; padding: 16px 22px; font-size: 18px; font-weight: 700;
+  background: var(--flag-red); color: #fff; cursor: pointer; transition: transform .06s ease, filter .15s;
+}
+.btn:hover { filter: brightness(1.05); }
+.btn:active { transform: translateY(1px) scale(.99); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.ghost { background: #fff; color: var(--ink); border: 2px solid #e5e5e5; }
+.btn.teal { background: var(--brand-teal-dark); }
+.btn.big { font-size: 22px; padding: 20px 28px; }
+.btn.sm { font-size: 14px; padding: 9px 13px; border-radius: 10px; }
+
+/* ---- option tiles (team + present) ---- */
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.opt {
+  border: 3px solid #ececec; border-radius: 16px; padding: 20px; font-size: 20px; font-weight: 700;
+  background: #fff; cursor: pointer; text-align: center; transition: all .12s; min-height: 72px;
+  display:flex; align-items:center; justify-content:center;
+}
+.opt:hover { border-color: var(--brand-teal); }
+.opt.sel { border-color: var(--flag-red); background: #fff0f1; box-shadow: 0 0 0 3px rgba(216,6,33,.15); }
+.opt.correct { border-color: var(--good); background: #eafaf3; }
+.opt.locked { opacity: .6; pointer-events: none; }
+
+/* photo tiles for spot-the-canadian */
+.photos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.photo { position: relative; border: 4px solid #ececec; border-radius: 16px; overflow: hidden; cursor: pointer; aspect-ratio: 1; background:#eee; }
+.photo img { width: 100%; height: 100%; object-fit: cover; display:block; }
+.photo.sel { border-color: var(--flag-red); box-shadow: 0 0 0 4px rgba(216,6,33,.2); }
+.photo .name { position:absolute; left:0; right:0; bottom:0; background:rgba(0,0,0,.6); color:#fff; padding:6px; font-size:14px; }
+.photo.rev-yes { border-color: var(--flag-red); box-shadow: 0 0 0 6px rgba(216,6,33,.35); }
+.photo.rev-no img { filter: blur(10px) grayscale(.6); opacity:.5; }
+
+/* ---- timer ---- */
+.timer { font-size: clamp(30px,7vw,80px); font-weight: 900; }
+.timer.low { color: var(--flag-red); }
+.timerbar { height: 12px; background:#eee; border-radius: 99px; overflow:hidden; }
+.timerbar > div { height:100%; background: var(--brand-teal-dark); transition: width .95s linear; }
+
+/* ---- pills / chips ---- */
+.pill { display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:99px; background:#f1f1f1; font-weight:700; font-size:14px; }
+.dot { width:12px; height:12px; border-radius:50%; display:inline-block; }
+
+/* ---- host scoreboard ---- */
+.sb-row { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; background:#fff; box-shadow: var(--shadow); }
+.sb-rank { width:28px; font-weight:900; color:var(--muted); }
+.sb-score { margin-left:auto; font-weight:900; font-size:20px; }
+.delta-pos { color: var(--good); }
+.delta-neg { color: var(--bad); }
+
+/* inputs */
+input.field { font-size:20px; padding:14px 16px; border-radius:12px; border:2px solid #ddd; width:100%; }
+.codebox { font-size: clamp(40px,10vw,110px); font-weight:900; letter-spacing:.1em; color:var(--flag-red); }
+
+/* falling leaves */
+@keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+.leaffall { position:fixed; top:-40px; font-size:28px; animation: fall linear infinite; z-index:0; }
