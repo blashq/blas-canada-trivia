@@ -1,5 +1,5 @@
 import { supabase } from './supabase'
-import { ROUNDS, FINALE } from './gameData'
+import { ROUNDS, FINALE, TEAM_COLORS, AVATARS } from './gameData'
 import { scoreAnswer } from './scoring'
 
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ' // no I/O
@@ -43,6 +43,18 @@ export async function joinGameByCode(code, { name, color, avatar, isBot = false 
   const { data: games } = await supabase.from('games').select('*').eq('room_code', code.toUpperCase().trim()).limit(1)
   if (!games || !games.length) throw new Error('No game found for that code.')
   const game = games[0]
+  // Auto-allocate a DISTINCT colour + avatar so every team looks different.
+  if (!color || !avatar) {
+    const { data: existing } = await supabase.from('teams').select('color, avatar').eq('game_id', game.id)
+    const used = existing || []
+    const usedColors = new Set(used.map(t => t.color))
+    const usedAvatars = new Set(used.map(t => t.avatar))
+    const freeColors = TEAM_COLORS.filter(c => !usedColors.has(c))
+    const freeAvatars = AVATARS.filter(a => !usedAvatars.has(a))
+    const rand = arr => arr[Math.floor(Math.random() * arr.length)]
+    color = color || (freeColors.length ? freeColors[0] : rand(TEAM_COLORS))
+    avatar = avatar || (freeAvatars.length ? rand(freeAvatars) : rand(AVATARS))
+  }
   const { data: team, error } = await supabase.from('teams')
     .insert({ game_id: game.id, name, color, avatar, is_bot: isBot }).select().single()
   if (error) throw error
@@ -54,7 +66,7 @@ export async function removeTeam(teamId) {
 export async function addBots(gameId, n = 2) {
   const names = ['Test Bot A', 'Test Bot B', 'Test Bot C', 'Test Bot D']
   const rows = Array.from({ length: n }, (_, i) => ({
-    game_id: gameId, name: names[i] || 'Bot ' + i, color: '#888', avatar: 'leaf', is_bot: true,
+    game_id: gameId, name: names[i] || 'Bot ' + i, color: TEAM_COLORS[i % TEAM_COLORS.length], avatar: AVATARS[i % AVATARS.length], is_bot: true,
   }))
   await supabase.from('teams').insert(rows)
 }

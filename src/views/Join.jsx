@@ -6,7 +6,7 @@ import { useCountdown, Timer, Brand, AvatarChip, MapleLeaf } from '../components
 import { shuffledOptions } from '../lib/shuffle.js'
 
 const LS = 'blas_team_v1'
-const emoji = { leaf: '🍁', moose: '🫎', beaver: '🦫', bear: '🐻', goose: '🪿', loon: '🦆' }
+const emoji = { moose: '🫎', beaver: '🦫', bear: '🐻', loon: '🦆', mountie: '👮', cntower: '🗼' }
 
 export default function Join() {
   const [team, setTeam] = useState(() => { try { return JSON.parse(localStorage.getItem(LS)) } catch { return null } })
@@ -24,6 +24,8 @@ function Splash({ children }) {
   return (
     <div className="screen center pad">
       <div className="flag-bar" style={{ position: 'fixed', top: 0, left: 0, right: 0 }} />
+      <img src="/art/beaver.png" alt="" className="join-art" style={{ left: '2vw' }} />
+      <img src="/art/celebrate.png" alt="" className="join-art" style={{ right: '2vw' }} />
       <MapleLeaf size={54} />
       <h1 className="big" style={{ margin: '12px 0' }}>BLAS Canada Day Trivia</h1>
       {children}
@@ -34,8 +36,6 @@ function Splash({ children }) {
 function JoinForm({ onJoined }) {
   const [code, setCode] = useState('')
   const [name, setName] = useState('')
-  const [color, setColor] = useState(TEAM_COLORS[0])
-  const [avatar, setAvatar] = useState(AVATARS[0])
   const [err, setErr] = useState('')
   const [busy, setBusy] = useState(false)
 
@@ -43,8 +43,8 @@ function JoinForm({ onJoined }) {
     if (!code.trim() || !name.trim()) { setErr('Enter a room code and team name.'); return }
     setBusy(true); setErr('')
     try {
-      const { team } = await joinGameByCode(code, { name: name.trim(), color, avatar })
-      onJoined({ id: team.id, name: team.name, color, avatar, gameId: team.game_id, roomCode: code.toUpperCase().trim() })
+      const { team } = await joinGameByCode(code, { name: name.trim() })
+      onJoined({ id: team.id, name: team.name, color: team.color, avatar: team.avatar, gameId: team.game_id, roomCode: code.toUpperCase().trim() })
     } catch (e) { setErr(e.message || 'Could not join.'); setBusy(false) }
   }
 
@@ -56,22 +56,7 @@ function JoinForm({ onJoined }) {
           value={code} onChange={e => setCode(e.target.value)} placeholder="ABCD" maxLength={5} />
         <label className="sub">Team name</label>
         <input className="field" value={name} onChange={e => setName(e.target.value)} placeholder="The Maple Mavericks" maxLength={24} />
-        <label className="sub">Team colour</label>
-        <div className="row wrap">
-          {TEAM_COLORS.map(c => (
-            <button key={c} onClick={() => setColor(c)} aria-label={c}
-              style={{ width: 40, height: 40, borderRadius: 10, background: c, border: color === c ? '3px solid #111' : '3px solid #fff', cursor: 'pointer' }} />
-          ))}
-        </div>
-        <label className="sub">Avatar</label>
-        <div className="row wrap">
-          {AVATARS.map(a => (
-            <button key={a} onClick={() => setAvatar(a)}
-              style={{ fontSize: 26, padding: '6px 10px', borderRadius: 10, border: avatar === a ? '3px solid var(--flag-red)' : '3px solid #eee', background: '#fff', cursor: 'pointer' }}>
-              {emoji[a]}
-            </button>
-          ))}
-        </div>
+        <p className="sub" style={{ margin: '2px 0 0', fontSize: 15 }}>We'll assign your team a colour &amp; a Canadian mascot so everyone stands out. 🍁</p>
         {err && <div style={{ color: 'var(--bad)', fontWeight: 700 }}>{err}</div>}
         <button className="btn big" disabled={busy} onClick={go}>{busy ? 'Joining…' : "Join the game 🍁"}</button>
       </div>

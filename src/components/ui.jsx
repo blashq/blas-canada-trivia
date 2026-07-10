@@ -48,16 +48,16 @@ export function LeafFall({ n = 14 }) {
 
 export function Brand() {
   return (
-    <div className="brandbar">
-      <MapleLeaf size={22} />
-      <span className="blas">BLAS</span>
-      <span className="sub" style={{ fontSize: 14 }}>Canada Day Trivia</span>
+    <div className="brandbar" style={{ gap: 12 }}>
+      <MapleLeaf size={42} />
+      <span className="blas" style={{ fontSize: 26 }}>BLAS</span>
+      <span style={{ fontSize: 20, fontWeight: 800, color: 'var(--flag-red)' }}>Canada Day Trivia</span>
     </div>
   )
 }
 
 export function AvatarChip({ avatar, color, name, size = 20 }) {
-  const emoji = { leaf: '🍁', moose: '🫎', beaver: '🦫', bear: '🐻', goose: '🪿', loon: '🦆' }[avatar] || '🍁'
+  const emoji = { moose: '🫎', beaver: '🦫', bear: '🐻', loon: '🦆', mountie: '👮', cntower: '🗼' }[avatar] || '🍁'
   return (
     <span className="pill">
       <span className="dot" style={{ background: color }} />

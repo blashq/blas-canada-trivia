@@ -5,7 +5,7 @@
 // the content pass. The STRUCTURE and SCORING are final.
 // ============================================================================
 
-export const AVATARS = ['leaf', 'moose', 'beaver', 'bear', 'goose', 'loon']
+export const AVATARS = ['moose', 'beaver', 'bear', 'loon', 'mountie', 'cntower']
 export const TEAM_COLORS = ['#D80621', '#0B5394', '#128A6B', '#B8860B', '#7A3E9D', '#C2410C']
 
 // Round TYPES: 'mc' | 'select-all' | 'clue-drip' | 'tf-rapid' | 'mixed' | 'wager'
@@ -22,28 +22,28 @@ export const ROUNDS = [
     questions: [
       { id: 'm1', image: 'maps/bc.png', prompt: 'Which one is this?',
         options: [{ id: 'bc', label: 'British Columbia' }, { id: 'ab', label: 'Alberta' }, { id: 'ko', label: 'Kootenay' }, { id: 'ca', label: 'Cariboo' }],
-        correct: 'bc', reveal: { answerName: 'British Columbia', flag: 'reveals/bc.png', blurb: 'The Pacific province, joined 1871. Its mainland really was once the colony of New Caledonia.' } },
+        correct: 'bc', reveal: { answerName: 'British Columbia', flag: 'reveals/bc.png', blurb: `British Columbia — Canada's Pacific coast, and the 6th province to join Confederation, in 1871. Kootenay and Cariboo are real regions inside BC, but neither was ever its own province.` } },
       { id: 'm2', image: 'maps/yt.png', prompt: 'Which one is this?',
         options: [{ id: 'yt', label: 'Yukon' }, { id: 'nwt', label: 'Northwest Territories' }, { id: 'mk', label: 'Mackenzie' }, { id: 'kw', label: 'Keewatin' }],
-        correct: 'yt', reveal: { answerName: 'Yukon', flag: 'reveals/yt.png', blurb: 'A territory, not a province. Capital: Whitehorse — Klondike Gold Rush country.' } },
+        correct: 'yt', reveal: { answerName: 'Yukon', flag: 'reveals/yt.png', blurb: `Yukon is a territory, not a province — capital Whitehorse, and the heart of the 1890s Klondike Gold Rush. Mackenzie and Keewatin were real northern districts that never became provinces.` } },
       { id: 'm3', image: 'maps/sk.png', prompt: 'Which one is this?',
         options: [{ id: 'sk', label: 'Saskatchewan' }, { id: 'mb', label: 'Manitoba' }, { id: 'ab', label: 'Alberta' }, { id: 'as', label: 'Assiniboia' }],
-        correct: 'sk', reveal: { answerName: 'Saskatchewan', flag: 'reveals/sk.png', blurb: 'The prairie near-rectangle. Before 1905, part of it was the District of Assiniboia.' } },
+        correct: 'sk', reveal: { answerName: 'Saskatchewan', flag: 'reveals/sk.png', blurb: `Saskatchewan — the prairie near-rectangle. Before it became a province in 1905, part of this land was the District of Assiniboia.` } },
       { id: 'm4', image: 'maps/on.png', prompt: 'Which one is this?',
         options: [{ id: 'on', label: 'Ontario' }, { id: 'qc', label: 'Quebec' }, { id: 'al', label: 'Algoma' }, { id: 'ni', label: 'Nipissing' }],
-        correct: 'on', reveal: { answerName: 'Ontario', flag: 'reveals/on.png', blurb: 'Most populous province. That bottom notch is the Great Lakes.' } },
+        correct: 'on', reveal: { answerName: 'Ontario', flag: 'reveals/on.png', blurb: `Ontario is Canada's most populous province, and that notch along the bottom is the Great Lakes. Algoma and Nipissing are real Ontario districts — not provinces.` } },
       { id: 'm5', image: 'maps/qc.png', prompt: 'Which one is this?',
         options: [{ id: 'qc', label: 'Quebec' }, { id: 'on', label: 'Ontario' }, { id: 'un', label: 'Ungava' }, { id: 'sg', label: 'Saguenay' }],
-        correct: 'qc', reveal: { answerName: 'Quebec', flag: 'reveals/qc.png', blurb: 'Largest province by area. La Belle Province — the heart of old New France.' } },
+        correct: 'qc', reveal: { answerName: 'Quebec', flag: 'reveals/qc.png', blurb: `Quebec is Canada's largest province by area — La Belle Province. Ungava and Saguenay are real regions within it, but were never provinces of their own.` } },
       { id: 'm6', image: 'maps/ns.png', prompt: 'Which one is this?',
         options: [{ id: 'ns', label: 'Nova Scotia' }, { id: 'nb', label: 'New Brunswick' }, { id: 'cb', label: 'Cape Breton' }, { id: 'ac', label: 'Acadia' }],
-        correct: 'ns', reveal: { answerName: 'Nova Scotia', flag: 'reveals/ns.png', blurb: '"New Scotland" — the peninsula plus Cape Breton. Acadia was the historic region here.' } },
+        correct: 'ns', reveal: { answerName: 'Nova Scotia', flag: 'reveals/ns.png', blurb: `Nova Scotia is Latin for New Scotland — a peninsula plus Cape Breton Island. Cape Breton was once its own colony, and Acadia was the historic French region here.` } },
       { id: 'm7', image: 'maps/pe.png', prompt: 'Which one is this?',
         options: [{ id: 'pe', label: 'Prince Edward Island' }, { id: 'nf', label: 'Newfoundland' }, { id: 'cb', label: 'Cape Breton' }, { id: 'sj', label: 'Île Saint-Jean' }],
-        correct: 'pe', reveal: { answerName: 'Prince Edward Island', flag: 'reveals/pe.png', blurb: "Smallest province. The trap \"Île Saint-Jean\" was literally PEI's own old French name." } },
+        correct: 'pe', reveal: { answerName: 'Prince Edward Island', flag: 'reveals/pe.png', blurb: `Prince Edward Island is Canada's smallest province. Its old French name was literally Île Saint-Jean — the exact trap in the options.` } },
       { id: 'm8', image: 'maps/nl.png', prompt: 'Which one is this?',
         options: [{ id: 'nl', label: 'Newfoundland & Labrador' }, { id: 'ns', label: 'Nova Scotia' }, { id: 'lb', label: 'Labrador' }, { id: 'av', label: 'Avalon' }],
-        correct: 'nl', reveal: { answerName: 'Newfoundland & Labrador', flag: 'reveals/nl.png', blurb: "Last to join Confederation, 1949. The Norse site L'Anse aux Meadows = Vinland." } },
+        correct: 'nl', reveal: { answerName: 'Newfoundland & Labrador', flag: 'reveals/nl.png', blurb: `Newfoundland & Labrador was the last to join Confederation, in 1949. Labrador is only half its name, and Avalon is its southeastern peninsula.` } },
     ],
   },
   // 2 ─────────────────────────────────────────────────────────────────────

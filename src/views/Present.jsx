@@ -5,7 +5,7 @@ import { loadLatestGame, roundAt, FINALE_ROUND_INDEX } from '../lib/room.js'
 import { useCountdown, Timer, Brand, MapleLeaf, LeafFall, AvatarChip } from '../components/ui.jsx'
 import { shuffledOptions } from '../lib/shuffle.js'
 
-const emoji = { leaf: '🍁', moose: '🫎', beaver: '🦫', bear: '🐻', goose: '🪿', loon: '🦆' }
+const emoji = { moose: '🫎', beaver: '🦫', bear: '🐻', loon: '🦆', mountie: '👮', cntower: '🗼' }
 
 export default function Present() {
   const [gameId, setGameId] = useState(null)
@@ -23,8 +23,8 @@ function Shell({ children }) {
   return (
     <div className="screen" style={{ height: '100vh', overflow: 'hidden' }}>
       <div className="flag-bar" />
-      <div className="row spread pad"><Brand /><span className="pill leaf">🍁 Happy Canada Day</span></div>
-      <div className="grow center pad" style={{ position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>{children}</div>
+      <div className="row spread pad"><Brand /><span className="pill leaf" style={{ fontSize: 20, fontWeight: 800, padding: '10px 18px', background: '#fff0f1', color: 'var(--flag-red-dark)' }}>🍁 Happy Belated Canada Day</span></div>
+      <div className="grow center pad" style={{ position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', paddingTop: '3vh' }}>{children}</div>
     </div>
   )
 }
@@ -49,6 +49,8 @@ function Lobby({ game, teams }) {
   const url = window.location.origin + window.location.pathname
   return (
     <div className="stack center">
+      <img src="/art/beaver.png" alt="" style={{ position: 'fixed', left: '2vw', bottom: '2vh', height: '32vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
+      <img src="/art/celebrate.png" alt="" style={{ position: 'fixed', right: '2vw', bottom: '2vh', height: '32vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
       <p className="sub">Join on your laptop at</p>
       <h2 className="big" style={{ color: 'var(--brand-teal-dark)' }}>{url}</h2>
       <p className="sub" style={{ marginTop: 20 }}>Room code</p>
@@ -68,6 +70,8 @@ function Lobby({ game, teams }) {
 function Intro({ round, idx }) {
   return (
     <div className="stack center" style={{ maxWidth: 1000 }}>
+      <img src="/art/mountie.png" alt="" style={{ position: 'fixed', left: '3vw', bottom: '2vh', height: '34vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
+      <img src="/art/friends.png" alt="" style={{ position: 'fixed', right: '3vw', bottom: '2vh', height: '30vh', pointerEvents: 'none', zIndex: 0, filter: 'drop-shadow(0 6px 12px rgba(0,0,0,.15))' }} />
       <MapleLeaf size={60} />
       <p className="sub">Round {idx + 1}</p>
       <h1 className="huge">{round.title}</h1>
@@ -90,9 +94,9 @@ function QuestionStage({ game, round, teams, answers }) {
 
   return (
     <div className="stack center present-compact" style={{ maxWidth: 1100, width: '100%', gap: 8 }}>
-      <div className="row spread" style={{ width: '100%' }}>
+      <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <span className="pill" style={{ fontSize: 18 }}>{round.title}{round.type !== 'wager' ? ` · Q${q + 1}` : ''}</span>
-        {!revealed && <div style={{ width: 220 }}><Timer remaining={remaining} frac={frac} /></div>}
+        {!revealed && <div style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', width: 200 }}><Timer remaining={remaining} frac={frac} /></div>}
       </div>
 
       {subtype === 'mc' && <MCStage question={question} revealed={revealed} seed={seed} />}
@@ -188,7 +192,7 @@ function RevealFooter({ blurb, tally }) {
           {tally.right === 0 ? 'Nobody got it! 😳' : `${tally.right} of ${tally.total} teams got it right`}
         </div>
       )}
-      {blurb && <p className="sub" style={{ fontSize: 'clamp(14px, 2vh, 18px)', maxWidth: 820, margin: 0 }}>{blurb}</p>}
+      {blurb && <p style={{ fontSize: 'clamp(18px, 2.7vh, 26px)', lineHeight: 1.3, color: 'var(--ink)', fontWeight: 500, maxWidth: 980, margin: 0 }}>{blurb}</p>}
     </div>
   )
 }

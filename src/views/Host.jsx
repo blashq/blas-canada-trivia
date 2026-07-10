@@ -9,7 +9,7 @@ import {
 } from '../lib/room.js'
 import { useCountdown, Brand, MapleLeaf } from '../components/ui.jsx'
 
-const emoji = { leaf: '🍁', moose: '🫎', beaver: '🦫', bear: '🐻', goose: '🪿', loon: '🦆' }
+const emoji = { moose: '🫎', beaver: '🦫', bear: '🐻', loon: '🦆', mountie: '👮', cntower: '🗼' }
 
 export default function Host() {
   const [gameId, setGameId] = useState(null)

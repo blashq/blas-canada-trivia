@@ -116,3 +116,9 @@ body::before {
   background-repeat: repeat; background-size: 155px;
   opacity: .05;
 }
+
+
+/* join-screen cartoon accents (laptop players); hidden on phones */
+.join-art { position: fixed; bottom: 2vh; height: 30vh; pointer-events: none; z-index: 0;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,.15)); }
+@media (max-width: 900px) { .join-art { display: none; } }
