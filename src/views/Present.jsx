@@ -23,7 +23,7 @@ function Shell({ children }) {
   return (
     <div className="screen" style={{ height: '100vh', overflow: 'hidden' }}>
       <div className="flag-bar" />
-      <div className="row spread pad"><Brand /><span className="pill leaf" style={{ fontSize: 20, fontWeight: 800, padding: '10px 18px', background: '#fff0f1', color: 'var(--flag-red-dark)' }}>🍁 Happy Belated Canada Day</span></div>
+      <div className="row pad"><Brand /></div>
       <div className="grow center pad" style={{ position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', paddingTop: '3vh' }}>{children}</div>
     </div>
   )
@@ -46,14 +46,13 @@ function Stage({ game, teams, answers }) {
 }
 
 function Lobby({ game, teams }) {
-  const url = window.location.origin + window.location.pathname
   return (
-    <div className="stack center" style={{ gap: 14 }}>
-      <p className="eyebrow">Join on your laptop at</p>
-      <h2 className="big" style={{ color: 'var(--brand-teal-dark)', fontSize: 'clamp(26px, 4.6vh, 56px)' }}>{url}</h2>
-      <p className="eyebrow" style={{ marginTop: 14 }}>Room code</p>
-      <div className="codechip"><span className="codebox" style={{ fontSize: 'clamp(40px, 8vw, 92px)' }}>{game.room_code}</span></div>
-      <div className="row wrap center" style={{ marginTop: 22, justifyContent: 'center' }}>
+    <div className="stack center" style={{ gap: 10 }}>
+      <span className="pill" style={{ background: '#fff0f1', color: 'var(--flag-red-dark)', fontWeight: 800, fontSize: 'clamp(17px, 2.5vh, 26px)', letterSpacing: '.02em', padding: '11px 24px' }}>🍁 Happy Belated Canada Day!</span>
+      <h1 className="huge" style={{ fontSize: 'clamp(46px, 10.5vh, 112px)', lineHeight: 1.0, margin: '2px 0' }}>Canada Day Trivia</h1>
+      <p className="eyebrow" style={{ marginTop: 22 }}>Your room code</p>
+      <div className="codechip"><span className="codebox" style={{ fontSize: 'clamp(46px, 9vw, 108px)' }}>{game.room_code}</span></div>
+      <div className="row wrap center" style={{ marginTop: 20, justifyContent: 'center' }}>
         {teams.length === 0 && <p className="sub">Waiting for teams to join…</p>}
         {teams.filter(t => !t.is_bot).map(t => (
           <span key={t.id} className="pill" style={{ fontSize: 20, padding: '10px 16px' }}>
