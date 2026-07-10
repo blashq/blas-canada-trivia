@@ -1,5 +1,5 @@
 // ============================================================================
-// Scoring — pure functions. Given a question, its round, and a team's answer,
+// Scoring - pure functions. Given a question, its round, and a team's answer,
 // return the points. `answer` is the row from the `answers` table (or null).
 // ============================================================================
 
@@ -30,7 +30,7 @@ function scoreDrip(correctValue, answer, tiers, wrongPts) {
   return tiers[tierIdx]
 }
 
-// Main entry — returns points (number) for one team's answer to one question.
+// Main entry - returns points (number) for one team's answer to one question.
 export function scoreAnswer(round, question, answer) {
   const val = answer ? answer.value : null
 

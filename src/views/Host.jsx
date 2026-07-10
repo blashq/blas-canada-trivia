@@ -131,7 +131,7 @@ function Controls({ game, teams, round, finale, answeredCount }) {
     return (
       <>
         <b>Lobby · {teams.filter(t => !t.is_bot).length} team(s) joined</b>
-        <p className="sub">Start when everyone's in (2–4 teams).</p>
+        <p className="sub">Start when everyone's in (2 to 4 teams).</p>
         <button className="btn big" disabled={total < 1} onClick={() => startGame(game.id)}>Start game →</button>
       </>
     )

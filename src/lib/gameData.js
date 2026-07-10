@@ -17,8 +17,8 @@ export const ROUNDS = [
     type: 'mc',
     timerSec: 15,
     scoring: { correct: 1, wrong: -1 },
-    rules: 'A map shape appears. Pick the right province or territory. Some options are real places, some are made-up. No answer counts as wrong.',
-    pointsLabel: '+1 correct · −1 wrong or no answer',
+    rules: 'A map shape appears. Pick the province or territory it shows. Failure to select an answer will count as a WRONG answer.',
+    pointsLabel: '+1 correct · -1 wrong or no answer',
     questions: [
       { id: 'm1', image: 'maps/bc.png', prompt: 'Which one is this?',
         options: [{ id: 'bc', label: 'British Columbia' }, { id: 'ab', label: 'Alberta' }, { id: 'ko', label: 'Kootenay' }, { id: 'ca', label: 'Cariboo' }],
@@ -53,8 +53,8 @@ export const ROUNDS = [
     type: 'mc',
     timerSec: 15,
     scoring: { correct: 1, wrong: -1 },
-    rules: 'A province or territory appears. Pick its capital. Careful, all four options are real cities from that same province, so the traps are the famous non-capitals. No answer counts as wrong.',
-    pointsLabel: '+1 correct · −1 wrong or no answer',
+    rules: 'A province or territory appears. Pick its capital city. Failure to select an answer will count as a WRONG answer.',
+    pointsLabel: '+1 correct · -1 wrong or no answer',
     questions: [
       { id: 'c1', prompt: 'What is the capital of Alberta?',
         options: [{ id: 'ed', label: 'Edmonton' }, { id: 'ca', label: 'Calgary' }, { id: 'rd', label: 'Red Deer' }, { id: 'le', label: 'Lethbridge' }],
@@ -89,8 +89,8 @@ export const ROUNDS = [
     type: 'select-all',
     timerSec: 30,
     scoring: { perCorrect: 1, perWrong: -1, mustPickOne: true },
-    rules: 'Four faces. Select EVERYONE who is Canadian, could be one, could be all four. At least one always is. You must pick at least one.',
-    pointsLabel: '+1 per correct pick · −1 per wrong pick',
+    rules: 'Four faces appear. Select everyone who is Canadian. You must select at least one.',
+    pointsLabel: '+1 per correct pick · -1 per wrong pick',
     questions: [
       // Photos supplied by Ayaz. isCanadian marks the correct picks.
       { id: 's1', prompt: 'Who here is Canadian?',
@@ -109,8 +109,8 @@ export const ROUNDS = [
     type: 'mc',
     timerSec: 20,
     scoring: { correct: 1, wrong: -1 },
-    rules: 'What does the word or phrase actually mean? The wrong answers are plausible on purpose. No answer counts as wrong.',
-    pointsLabel: '+1 correct · −1 wrong or no answer',
+    rules: 'What does the word or phrase mean? Failure to select an answer will count as a WRONG answer.',
+    pointsLabel: '+1 correct · -1 wrong or no answer',
     questions: [
       { id: 'sl1', prompt: 'What is a "toque"?',
         options: [{ id: 'a', label: 'A knitted winter hat' }, { id: 'b', label: 'A small canoe' }, { id: 'c', label: 'A type of mitten' }, { id: 'd', label: 'A snow shovel' }],
@@ -128,8 +128,8 @@ export const ROUNDS = [
     timerSec: 30,
     clueIntervalSec: 10,
     scoring: { tiers: [3, 2, 1], wrong: -1, mustAnswer: true },
-    rules: 'Clues appear one at a time. Lock in early for more points: after clue 1 = +3, clue 2 = +2, clue 3 = +1. Wrong OR no answer = −1. Your pick is FINAL, no changing it.',
-    pointsLabel: '+3 / +2 / +1 by clue · −1 wrong or no answer',
+    rules: 'Clues appear one at a time. Lock in early for more points: after clue 1 = +3, clue 2 = +2, clue 3 = +1. Your pick is FINAL, no changing it. Failure to select an answer will count as a WRONG answer.',
+    pointsLabel: '+3 / +2 / +1 by clue · -1 wrong or no answer',
     questions: [
       { id: 'ct1',
         clues: ['This city sits where two rivers meet, the Bow and the Elbow.', 'It hosted the 1988 Winter Olympics.', 'Every July it throws "The Greatest Outdoor Show on Earth."'],
@@ -148,8 +148,8 @@ export const ROUNDS = [
     type: 'tf-rapid',
     timerSec: 10,
     scoring: { correct: 1, wrong: -1 },
-    rules: 'Rapid fire! TRUE or FALSE, is it really Canadian? 10 seconds each, no reveals until the end. No answer counts as wrong.',
-    pointsLabel: '+1 correct · −1 wrong or no answer',
+    rules: 'Rapid fire! TRUE or FALSE: is it really Canadian? 10 seconds each, no reveals until the end. Failure to select an answer will count as a WRONG answer.',
+    pointsLabel: '+1 correct · -1 wrong or no answer',
     questions: [
       { id: 'co1', statement: 'Basketball was invented by a Canadian.', correct: true, blurb: 'TRUE, James Naismith, from Almonte, Ontario, invented it in 1891.' },
       { id: 'co2', statement: 'The clothing brand Lululemon was founded in Canada.', correct: true, blurb: 'TRUE, founded in Vancouver in 1998.' },
@@ -163,8 +163,8 @@ export const ROUNDS = [
     type: 'mc',
     timerSec: 20,
     scoring: { correct: 2, wrong: -1 },
-    rules: 'A mix of everything Canadian. Worth more now, +2 for correct! No answer counts as wrong.',
-    pointsLabel: '+2 correct · −1 wrong or no answer',
+    rules: 'A mix of everything Canadian. Worth more now, +2 for correct! Failure to select an answer will count as a WRONG answer.',
+    pointsLabel: '+2 correct · -1 wrong or no answer',
     questions: [
       { id: 'g1', prompt: 'In what year did Canada become a country (Confederation)?',
         options: [{ id: 'a', label: '1776' }, { id: 'b', label: '1812' }, { id: 'c', label: '1867' }, { id: 'd', label: '1931' }],
@@ -181,10 +181,10 @@ export const ROUNDS = [
     type: 'mixed',
     timerSec: 15,
     multiplier: 4,
-    // base values are ×1; engine multiplies by `multiplier`. Wrong is a flat -2 (see scoring.js).
+    // base values are x1; engine multiplies by `multiplier`. Wrong is a flat -2 (see scoring.js).
     scoring: { correctBase: 1, wrongFlat: -2, drip: { tiers: [2, 1], intervalSec: 10 }, mustAnswer: true },
-    rules: 'Your home turf, Canadian tax & finance, worth 4× the points! Mixed formats. Correct +4 (bank clues up to +8). Wrong or no answer −2.',
-    pointsLabel: '4× scoring · correct +4 (drip +8/+4) · wrong/none −2',
+    rules: 'Your home turf: Canadian tax and finance, worth 4x the points! Mixed formats. Correct +4, and bank clues up to +8. Failure to select an answer will count as a WRONG answer.',
+    pointsLabel: '4x scoring · correct +4 (drip +8/+4) · wrong/none -2',
     questions: [
       { id: 'b1', subtype: 'mc', prompt: 'How many provinces/territories charge NO provincial sales tax (only the 5% GST)?',
         options: [{ id: 'a', label: '2' }, { id: 'b', label: '4' }, { id: 'c', label: '5' }, { id: 'd', label: '6' }],
